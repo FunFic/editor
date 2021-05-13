@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>FunFic Editor</title>
+  <link href="css/styles.css" rel="stylesheet">
+  <script src="js/ace/ace.js" type="text/javascript" charset="utf-8"></script>
+</head>
+
+<body>
+<div class="wrapper">
+  <nav class="menu">
+    <ol>
+        <li><a href="javascript:addText();">Text</a></li>
+        <li><a href="javascript:addCircle();">Circle</a></li>
+    </ol>
+  </nav>
+  <div id="editor">function setup() {
+  createCanvas(windowWidth, windowHeight);
+  background(255);
+  fill(0);
+}
+
+function draw() {
+  ellipse(mouseX, mouseY, 10, 10);
+}</div>
+  <iframe id="result" src="result.html"></iframe>
+</div>
+</body>
+<script>
+  var editor = ace.edit("editor");
+  var resultFrame = document.getElementById("result");
+
+  editor.setTheme("ace/theme/dracula");
+  editor.session.setMode("ace/mode/javascript");
+  
+  editor.session.on('change', function(delta) {
+      // delta.start, delta.end, delta.lines, delta.action
+      resultFrame.contentWindow.location.reload();
+  });
+
+  resultFrame.onload = function() {
+    resultFrame.contentWindow.postMessage(editor.getValue());
+  };
+
+  function addText(){
+    add("text('Olá mundo', mouseX, mouseY);");
+  }
+
+  function addCircle(){
+    add("circle(mouseX, mouseY, 100, 100);");
+  }
+
+  function add(text){
+    var cursor = editor.selection.getCursor();
+    editor.session.insert(cursor, text);
+  }
+</script>
+</body>
+
+</html>
