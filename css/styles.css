@@ -4,18 +4,20 @@ body {
     margin: 0;
     background-color: #FFF;
     height: 100%;
-    display: flex;
     height: 100%;
 }
-.wrapper {
-    display: block;
-    flex: 1 1 auto;
-    display: flex;
-    flex-direction: row;
+.funfic .container-fluid,
+.funfic .row,
+.funfic .col
+{
     height: 100%;
 }
-.menu{
-    width: 60px;
+/*bootstrap medium layout*/
+@media screen and (max-width: 767px) {
+    .funfic .col
+    {
+        height: 50%;
+    }
 }
 .menu ol {
     list-style: none;
@@ -32,8 +34,7 @@ body {
 .menu ol li a:hover{
     background-color:darkorchid;
 }
-#editor, #result {
-    width: calc(50% - 30px);
-    display: flex;
-    flex-direction: column;
+#result {
+    width: 100%;
+    height: 100%;
 }
