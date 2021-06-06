@@ -17,10 +17,11 @@
     <div class="col col-auto p-0">
       <nav class="menu">
         <ol>
-            <li><a data-bs-toggle="modal" data-bs-target="#popup" id="teste" onclick="addBackground();">Fundo</a></li>
-            <li><a href="javascript:addText();">Text</a></li>
-            <li><a href="javascript:addCircle();">Circle</a></li>
-            <li><a href="javascript:addFundo();">Fundo</a></li>
+          <li><a href="#" id="backgroundBtn">Fundo</a></li>
+          <li><a href="#" id="bubbleBtn">Balão</a></li>
+          <li><a href="#" id="imageBtn">Imagem</a></li>
+          <li><a href="javascript:addText();">Text</a></li>
+          <li><a href="javascript:addCircle();">Circle</a></li>
         </ol>
       </nav>
     </div><!--col-->
@@ -57,6 +58,10 @@ function draw() {
 </div>
 </body>
 <script>
+
+  /*
+  Editor
+  */
   var editor = ace.edit("editor");
   var resultFrame = document.getElementById("result");
   var prevValue, prevCursor;
@@ -73,22 +78,22 @@ function draw() {
     resultFrame.contentWindow.postMessage(editor.getValue());
   };
 
+  /*
+  Popup
+  */
   var popupEl = document.getElementById('popup');
+  var popup = new bootstrap.Modal(popupEl);
   var popupBodyEl = document.getElementById('popupBody');
   var popupConfirmEl = document.getElementById('popupConfirm');
   popupEl.addEventListener('show.bs.modal', function (event) {
-    console.log("show", event);
     prevValue = editor.getValue();
     prevCursor = editor.selection.getCursor();
   });
-  popupEl.addEventListener('hide.bs.modal', function (event) {
-    console.log("hide");
-    reset();
-  });
+  popupEl.addEventListener('hide.bs.modal', reset);
   popupConfirmEl.addEventListener('click', function (event) {
     prevValue = editor.getValue();
     prevCursor = editor.selection.getCursor();
-    popupEl.hide();
+    popup.hide();
   });
 
   function reset(){
@@ -96,7 +101,14 @@ function draw() {
     editor.navigateTo(prevCursor.row, prevCursor.column);
   }
 
-  function addBackground(){
+  /*
+  Widgets
+  */
+  //Background
+  var backgroundBtnEl = document.getElementById('backgroundBtn');
+  backgroundBtnEl.addEventListener('click', function (event) {
+    event.preventDefault();
+
     popupBodyEl.innerHTML =
     `
     <label for="widgetBackgroundR" class="form-label">Red</label>
@@ -106,6 +118,7 @@ function draw() {
     <label for="widgetBackgroundB" class="form-label">Blue</label>
     <input type="range" class="form-range" min="0" max="255" id="widgetBackgroundB">
     `;
+    popup.show();
 
     var widgetBackgroundREl = document.getElementById('widgetBackgroundR');
     var widgetBackgroundGEl = document.getElementById('widgetBackgroundG');
@@ -121,17 +134,117 @@ function draw() {
       var b = widgetBackgroundBEl.value;
       add(`background(${r}, ${g}, ${b});`);
     }
-  }
+    update();
+  });
+
+  //Bubble
+  var bubbleBtnEl = document.getElementById('bubbleBtn');
+  bubbleBtnEl.addEventListener('click', function (event) {
+    event.preventDefault();
+
+    popupBodyEl.innerHTML =
+    `
+    <label for="widgetBubbleText" class="form-label">Texto</label>
+    <textarea class="form-control" id="widgetBubbleText" rows="3">Meu texto</textarea>
+    <label for="widgetBubbleFont" class="form-label">Fonte</label>
+    <select class="form-select" id="widgetBubbleFont">
+      <option>Arial</option>
+      <option>Courier New</option>
+      <option>Georgia</option>
+      <option>Times New Roman</option>
+      <option>Trebuchet MS</option>
+      <option>Verdana</option>
+    </select>
+    <label for="widgetBubbleX" class="form-label">X</label>
+    <input type="range" class="form-range" min="0" max="500" id="widgetBubbleX">
+    <label for="widgetBubbleY" class="form-label">Y</label>
+    <input type="range" class="form-range" min="0" max="500" id="widgetBubbleY">
+    <label for="widgetBubbleSize" class="form-label">Tamanho</label>
+    <input type="range" class="form-range" min="10" max="100" id="widgetBubbleSize">
+    <label for="widgetBubbleDirection" class="form-label">Direção</label>
+    <select class="form-select" id="widgetBubbleDirection">
+      <option value="0">Abaixo</option>
+      <option value="1">Acima</option>
+      <option value="2">Direita</option>
+      <option value="3">Esquerda</option>
+    </select>
+    `;
+    popup.show();
+
+    var widgetBubbleTextEl = document.getElementById('widgetBubbleText');
+    var widgetBubbleXEl = document.getElementById('widgetBubbleX');
+    var widgetBubbleYEl = document.getElementById('widgetBubbleY');
+    var widgetBubbleSizeEl = document.getElementById('widgetBubbleSize');
+    var widgetBubbleDirectionEl = document.getElementById('widgetBubbleDirection');
+    var widgetBubbleFontEl = document.getElementById('widgetBubbleFont');
+    widgetBubbleTextEl.addEventListener('change', event => update());
+    widgetBubbleTextEl.addEventListener('input', event => update());     
+    widgetBubbleXEl.addEventListener('change', event => update());
+    widgetBubbleYEl.addEventListener('change', event => update());
+    widgetBubbleSizeEl.addEventListener('change', event => update());
+    widgetBubbleDirectionEl.addEventListener('change', event => update());
+    widgetBubbleFontEl.addEventListener('change', event => update());
+
+    function update(){
+      reset();
+      add(`textFont('${widgetBubbleFontEl.value}');
+    textSize(${widgetBubbleSizeEl.value});
+    text(\`${widgetBubbleTextEl.value}\`, ${widgetBubbleXEl.value}, ${widgetBubbleYEl.value});`);
+    }
+    update();
+  });
+
+  //Image
+  var imageBtnEl = document.getElementById('imageBtn');
+  imageBtnEl.addEventListener('click', function (event) {
+    event.preventDefault();
+
+    popupBodyEl.innerHTML =
+    `
+    <div class="form-group">
+      <label for="widgetImageFile">Imagem</label>
+      <input type="file" class="form-control-file" id="widgetImageFile">
+    </div>
+    <label for="widgetImageX" class="form-label">X</label>
+    <input type="range" class="form-range" min="0" max="500" id="widgetImageX">
+    <label for="widgetImageY" class="form-label">Y</label>
+    <input type="range" class="form-range" min="0" max="500" id="widgetImageY">
+    <label for="widgetImageScale" class="form-label">Escala</label>
+    <input type="range" class="form-range" min="0" max="3" value="1" id="widgetImageScale">
+    `;
+    popup.show();
+
+    var widgetImageFileEl = document.getElementById('widgetImageFile');
+    var widgetImageXEl = document.getElementById('widgetImageX');
+    var widgetImageYEl = document.getElementById('widgetImageY');
+    var widgetImageScaleEl = document.getElementById('widgetImageScale');
+    widgetImageFileEl.addEventListener('change', event => update());
+    widgetImageXEl.addEventListener('change', event => update());
+    widgetImageYEl.addEventListener('change', event => update());
+    widgetImageScaleEl.addEventListener('change', event => update());
+
+    function update(){
+      var url = "";
+      const [file] = widgetImageFileEl.files;
+      if (file) {
+        url = URL.createObjectURL(file);
+        console.log(url);
+      }
+      return;
+      reset();
+      add(`push();
+      scale(${widgetImageScaleEl.value});
+      image(${url}, ${widgetImageXEl.value}, ${widgetImageYEl.value});
+      pop();`);
+    }
+    update();
+  });
 
   function addText(){
     add("text('Olá mundo', mouseX, mouseY);");
   }
 
   function addCircle(){
-    add("circle(mouseX, mouseY, 100, 100);");
-  }
-
-  function addFundo(){
     add("circle(mouseX, mouseY, 100, 100);");
   }
 
