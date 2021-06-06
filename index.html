@@ -17,19 +17,20 @@
     <div class="col col-auto p-0">
       <nav class="menu">
         <ol>
-            <li><a href="javascript:addText();" data-bs-toggle="modal" data-bs-target="#exampleModal">Text</a></li>
+            <li><a data-bs-toggle="modal" data-bs-target="#popup" id="teste" onclick="addBackground();">Fundo</a></li>
+            <li><a href="javascript:addText();">Text</a></li>
             <li><a href="javascript:addCircle();">Circle</a></li>
             <li><a href="javascript:addFundo();">Fundo</a></li>
         </ol>
       </nav>
     </div><!--col-->
     <div class="col p-0" id="editor">function setup() {
-  createCanvas(windowWidth, windowHeight);
-  fill(0);
+    createCanvas(windowWidth, windowHeight);
+    fill(0);
 }
 
 function draw() {
-  ellipse(mouseX, mouseY, 10, 10);
+    ellipse(mouseX, mouseY, 10, 10);
 }</div><!--col-->
     <div class="col col-12 col-md-6 p-0">
       <iframe id="result" src="result.html"></iframe>
@@ -37,26 +38,19 @@ function draw() {
   </div><!--row-->
 </div><!--container-->
 
-<div class="modal rubberBand" id="exampleModal" tabindex="-1">
+<div class="modal fade" id="popup" tabindex="-1">
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
         <h5 class="modal-title">Cor de Fundo</h5>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-      </div>
-      <div class="modal-body">
-        <p>
-          <label for="widgetBackgroundRed" class="form-label">Red</label>
-          <input type="range" class="form-range" min="0" max="255" id="widgetBackgroundRed">
-          <label for="widgetBackgroundGreen" class="form-label">Green</label>
-          <input type="range" class="form-range" min="0" max="255" id="widgetBackgroundGreen">
-          <label for="widgetBackgroundBlue" class="form-label">Blue</label>
-          <input type="range" class="form-range" min="0" max="255" id="widgetBackgroundBlue">
-        </p>
+      </div>  
+      <div class="modal-body" id="popupBody">
+        
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-        <button type="button" class="btn btn-primary">Confirmar</button>
+        <button type="button" class="btn btn-primary" id="popupConfirm">Confirmar</button>
       </div>
     </div>
   </div>
@@ -65,6 +59,7 @@ function draw() {
 <script>
   var editor = ace.edit("editor");
   var resultFrame = document.getElementById("result");
+  var prevValue, prevCursor;
 
   editor.setTheme("ace/theme/dracula");
   editor.session.setMode("ace/mode/javascript");
@@ -77,6 +72,56 @@ function draw() {
   resultFrame.onload = function() {
     resultFrame.contentWindow.postMessage(editor.getValue());
   };
+
+  var popupEl = document.getElementById('popup');
+  var popupBodyEl = document.getElementById('popupBody');
+  var popupConfirmEl = document.getElementById('popupConfirm');
+  popupEl.addEventListener('show.bs.modal', function (event) {
+    console.log("show", event);
+    prevValue = editor.getValue();
+    prevCursor = editor.selection.getCursor();
+  });
+  popupEl.addEventListener('hide.bs.modal', function (event) {
+    console.log("hide");
+    reset();
+  });
+  popupConfirmEl.addEventListener('click', function (event) {
+    prevValue = editor.getValue();
+    prevCursor = editor.selection.getCursor();
+    popupEl.hide();
+  });
+
+  function reset(){
+    editor.setValue(prevValue);
+    editor.navigateTo(prevCursor.row, prevCursor.column);
+  }
+
+  function addBackground(){
+    popupBodyEl.innerHTML =
+    `
+    <label for="widgetBackgroundR" class="form-label">Red</label>
+    <input type="range" class="form-range" min="0" max="255" id="widgetBackgroundR">
+    <label for="widgetBackgroundG" class="form-label">Green</label>
+    <input type="range" class="form-range" min="0" max="255" id="widgetBackgroundG">
+    <label for="widgetBackgroundB" class="form-label">Blue</label>
+    <input type="range" class="form-range" min="0" max="255" id="widgetBackgroundB">
+    `;
+
+    var widgetBackgroundREl = document.getElementById('widgetBackgroundR');
+    var widgetBackgroundGEl = document.getElementById('widgetBackgroundG');
+    var widgetBackgroundBEl = document.getElementById('widgetBackgroundB');
+    widgetBackgroundREl.addEventListener('change', event => update());
+    widgetBackgroundGEl.addEventListener('change', event => update());
+    widgetBackgroundBEl.addEventListener('change', event => update());
+
+    function update(){
+      reset();
+      var r = widgetBackgroundREl.value;
+      var g = widgetBackgroundGEl.value;
+      var b = widgetBackgroundBEl.value;
+      add(`background(${r}, ${g}, ${b});`);
+    }
+  }
 
   function addText(){
     add("text('Olá mundo', mouseX, mouseY);");
