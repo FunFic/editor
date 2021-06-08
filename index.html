@@ -137,10 +137,10 @@ function draw() {
       var r = widgetBackgroundREl.value;
       var g = widgetBackgroundGEl.value;
       var b = widgetBackgroundBEl.value;
-      if(commandExists(editor.getValue(), "background")){
+      if(injector.commandExists(editor.getValue(), "background")){
         editor.setValue(
           js_beautify(
-            updateCommand(editor.getValue(), "background", `background(${r}, ${g}, ${b})`)
+            injector.updateCommand(editor.getValue(), "background", `background(${r}, ${g}, ${b})`)
           )
         );
       }else{
@@ -200,7 +200,7 @@ function draw() {
 
     function update(){
       reset();
-      if(!functionExists(editor.getValue(), "desenhaBalao"))
+      if(!injector.functionExists(editor.getValue(), "desenhaBalao"))
       addToBegin(`function desenhaBalao(texto, direcao, font, tamanho, x, y) {
 	textFont(font)
 	textSize(tamanho)
@@ -302,6 +302,11 @@ function draw() {
     update();
   });
 
+  /*
+  Injector
+  */
+  var injector = Injection();
+
   function addText(){
     addToFunction("draw", "text('Olá mundo', mouseX, mouseY)");
   }
@@ -317,7 +322,7 @@ function draw() {
   function addToFunction(functionName, code){
     editor.setValue(
       js_beautify(
-        injectByFunctionName(
+        injector.injectByFunctionName(
           editor.getValue(), functionName, code
         )
       )
@@ -325,13 +330,9 @@ function draw() {
   }
 
   function valida(){
-    var code = replaceScapeChars(editor.getValue());
-
-    var ast = pegParser(code); 
+    var code = injector.validate(editor.getValue());
     editor.setValue(
-      js_beautify(
-        pegReverser(ast)
-      )
+      js_beautify(code)
     );
   }
 </script>
