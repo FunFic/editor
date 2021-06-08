@@ -5,6 +5,10 @@
 window.pegReverser = function() {
     const pegReverseDict = {
         Program: (node) => `${node.body.map((inner) => pegReverse(inner)).join("\n\n")}`,
+        ArrowFunctionDeclaration: (node) =>	
+            `(${node.params.map((inner) => pegReverse(inner)).join(", ")}) => ${pegReverse(	
+            node.body	
+            )}`,
         AssignmentExpression: (node) =>
             `${pegReverse(node.left)} ${node.operator} ${pegReverse(node.right)}`,
         BinaryExpression: (node) =>
@@ -38,7 +42,7 @@ window.pegReverser = function() {
             .join(", ")})`,
         SingleQuotedStringLiteral: (node) => `'${node.value}'`,
         VariableDeclaration: (node) =>
-            `var ${node.declarations.map((decl) => pegReverse(decl)).join(", ")}`,
+            `${node.kind} ${node.declarations.map((decl) => pegReverse(decl)).join(", ")}`,
         VariableDeclarator: (node) =>
             node.init == null
             ? `${pegReverse(node.id)}`
