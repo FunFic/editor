@@ -48,11 +48,13 @@ function draw() {
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title">Cor de Fundo</h5>
+        <h5 class="modal-title" id="popupTitle">
+          <!--dynamic content-->
+        </h5>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>  
       <div class="modal-body" id="popupBody">
-        
+        <!--dynamic content-->
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
@@ -88,6 +90,7 @@ function draw() {
   */
   var popupEl = document.getElementById('popup');
   var popup = new bootstrap.Modal(popupEl);
+  var popupTitleEl = document.getElementById('popupTitle');
   var popupBodyEl = document.getElementById('popupBody');
   var popupConfirmEl = document.getElementById('popupConfirm');
   popupEl.addEventListener('show.bs.modal', function (event) {
@@ -109,21 +112,26 @@ function draw() {
   /*
   Widgets
   */
+  function showPopup(title, body){
+    popupTitleEl.innerHTML = title;
+    popupBodyEl.innerHTML = body;
+    popup.show();
+  }
+
   //Background
   var backgroundBtnEl = document.getElementById('backgroundBtn');
   backgroundBtnEl.addEventListener('click', function (event) {
     event.preventDefault();
 
-    popupBodyEl.innerHTML =
-    `
+
+    showPopup("Cor de Fundo", `
     <label for="widgetBackgroundR" class="form-label">Red</label>
     <input type="range" class="form-range" min="0" max="255" id="widgetBackgroundR">
     <label for="widgetBackgroundG" class="form-label">Green</label>
     <input type="range" class="form-range" min="0" max="255" id="widgetBackgroundG">
     <label for="widgetBackgroundB" class="form-label">Blue</label>
     <input type="range" class="form-range" min="0" max="255" id="widgetBackgroundB">
-    `;
-    popup.show();
+    `);
 
     var widgetBackgroundREl = document.getElementById('widgetBackgroundR');
     var widgetBackgroundGEl = document.getElementById('widgetBackgroundG');
@@ -155,8 +163,7 @@ function draw() {
   bubbleBtnEl.addEventListener('click', function (event) {
     event.preventDefault();
 
-    popupBodyEl.innerHTML =
-    `
+    showPopup("Balão de Texto", `
     <label for="widgetBubbleText" class="form-label">Texto</label>
     <textarea class="form-control" id="widgetBubbleText" rows="3">Meu texto</textarea>
     <label for="widgetBubbleFont" class="form-label">Fonte</label>
@@ -181,8 +188,7 @@ function draw() {
       <option>Direita</option>
       <option>Esquerda</option>
     </select>
-    `;
-    popup.show();
+    `);
 
     var widgetBubbleTextEl = document.getElementById('widgetBubbleText');
     var widgetBubbleXEl = document.getElementById('widgetBubbleX');
@@ -243,8 +249,7 @@ function draw() {
   imageBtnEl.addEventListener('click', function (event) {
     event.preventDefault();
 
-    popupBodyEl.innerHTML =
-    `
+    showPopup("Imagem", `
     <div class="form-group">
       <label for="widgetImageFile">Imagem</label>
       <input type="file" class="form-control-file" id="widgetImageFile">
@@ -255,8 +260,7 @@ function draw() {
     <input type="range" class="form-range" min="0" max="500" id="widgetImageY">
     <label for="widgetImageScale" class="form-label">Escala</label>
     <input type="range" class="form-range" min="0" max="3" value="1" step="0.01" id="widgetImageScale">
-    `;
-    popup.show();
+    `);
 
     var widgetImageFileEl = document.getElementById('widgetImageFile');
     var widgetImageXEl = document.getElementById('widgetImageX');
