@@ -12,29 +12,101 @@ body {
 {
     height: 100%;
 }
-/*bootstrap medium layout*/
-@media screen and (max-width: 767px) {
-    .funfic .col
-    {
-        height: 50%;
-    }
+.menu {
+    width: 80px;
 }
 .menu ol {
     list-style: none;
     padding: 0px;
     margin: 0px;
 }
-.menu ol li a{
-    background-color: blueviolet;
-    display: block;
+.menu ol li{
     padding: 10px;
-    color: #FFF;
-    text-decoration: none;
 }
-.menu ol li a:hover{
-    background-color:darkorchid;
+.menu ol li a{
+    display: block;
+    color: rgba(0, 0, 0, 0);
+    text-decoration: none;
+    height: 60px;
+    background-size: contain;
+    background-position: center center;
+    background-repeat: no-repeat;
 }
 #result {
     width: 100%;
     height: 100%;
+}
+
+
+.menu ol li a#newBtn{
+    background-image: url(../images/icones2/add.png);
+}
+.menu ol li a#newBtn:hover{
+    background-image: url(../images/icones/add.png);
+}
+
+.menu ol li a#backgroundBtn{
+    background-image: url(../images/icones2/background.png);
+}
+.menu ol li a#backgroundBtn:hover{
+    background-image: url(../images/icones/background.png);
+}
+
+.menu ol li a#textBtn{
+    background-image: url(../images/icones2/txt.png);
+}
+.menu ol li a#textBtn:hover{
+    background-image: url(../images/icones/txt.png);
+}
+
+.menu ol li a#imageBtn{
+    background-image: url(../images/icones2/img.png);
+}
+.menu ol li a#imageBtn:hover{
+    background-image: url(../images/icones/img.png);
+}
+
+.menu ol li a#drawBtn{
+    background-image: url(../images/icones2/draw.png);
+}
+.menu ol li a#drawBtn:hover{
+    background-image: url(../images/icones/draw.png);
+}
+
+.menu ol li a#bubbleBtn{
+    background-image: url(../images/icones2/balao.png);
+}
+.menu ol li a#bubbleBtn:hover{
+    background-image: url(../images/icones/balao.png);
+}
+
+.menu ol li a#helpBtn{
+    background-image: url(../images/icones2/help.png);
+}
+.menu ol li a#helpBtn:hover{
+    background-image: url(../images/icones/help.png);
+}
+
+.menu ol li a#saveBtn{
+    background-image: url(../images/icones2/down.png);
+}
+.menu ol li a#saveBtn:hover{
+    background-image: url(../images/icones/down.png);
+}
+
+/*bootstrap medium layout*/
+@media screen and (max-width: 767px) {
+    .funfic .col
+    {
+        height: 50%;
+    }
+    .menu {
+        width: 60px;
+    }
+    .menu ol li a{
+        height: 50px;
+    }
+    .menu ol li{
+        padding: 5px;
+    }
 }
