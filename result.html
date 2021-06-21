@@ -15,8 +15,12 @@
   </style>
   <script>
     window.addEventListener("message", (event) => {
-        if(typeof event.data == "string")
-            start(event.data);
+        if(typeof event.data == "object" && event.data.type) {
+          if(event.data.type == "newCode")
+              start(event.data.code);
+          else if(event.data.type == "getImage")
+              getImage();
+        }
     }, false);
 
     function start(code){
@@ -30,6 +34,12 @@
 
         document.head.appendChild(scriptP5);
         document.head.appendChild(scriptSketch);
+    }
+
+    function getImage(){
+        var canvas = document.querySelector("canvas");
+        var data = canvas.toDataURL("image/jpeg");
+        parent.imageLoaded(data);
     }
   </script>
 </head>

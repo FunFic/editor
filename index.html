@@ -87,8 +87,13 @@ function draw() {
   });
 
   resultFrame.onload = function() {
-    resultFrame.contentWindow.postMessage(editor.getValue());
+    resultFrame.contentWindow.postMessage({type:"newCode", code:editor.getValue()});
   };
+
+  /*
+  iFrame message receiver
+  */
+  var imageLoaded;//store temporary function
 
   /*
   Popup
@@ -129,7 +134,7 @@ function draw() {
     event.preventDefault();
 
     showPopup("Novo", `
-    <div class="container-fluid container-template">
+    <div class="container-fluid container-buttons">
       <div class="row">
         <div class="col-sm-4"><div class="btn">Fanfic com fundo</div></div>
         <div class="col-sm-4"><div class="btn">Personagem com balão</div></div>
@@ -477,7 +482,83 @@ function draw() {
   saveBtnEl.addEventListener('click', function (event) {
     event.preventDefault();
 
-    showPopup("Salvar", ``);
+    showPopup("Salvar", `
+    <div class="container-fluid container-buttons">
+      <div class="row">
+        <div class="col-sm-6"><div class="btn" id="widgetSaveSaveCode">Salvar código</div></div>
+        <div class="col-sm-6"><div class="btn" id="widgetSaveSaveImage">Salvar imagem</div></div>
+        <div><div class="btn" id="widgetSaveShare">Compartilhar Imagem</div></div>
+      </div>
+      <div class="row">
+        Compartilhe nas suas redes sociais usando #FunFic
+      </div>
+    </div>
+    `);
+
+    function download(text, createBlobURL, name, type) {
+      console.log(text);
+      var a = document.createElement('a');
+      if(createBlobURL){
+        var file = new Blob([text], {type: type});
+        a.setAttribute('href', URL.createObjectURL(file));
+      }else{
+        a.setAttribute('href', text);
+      }
+      a.setAttribute('download', name);
+      a.style.display = 'none';
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+    }
+
+    function urltoFile(url, filename, mimeType){
+        return (fetch(url)
+            .then(function(res){return res.arrayBuffer();})
+            .then(function(buf){return new File([buf], filename,{type:mimeType});})
+        );
+    }
+
+    function onLoadToSave(imageData){
+      urltoFile(imageData, 'funfic.jpg','image/jpeg')
+        .then(file => { 
+          download(imageData, false, 'funfic.jpg', 'image/jpeg');
+        });
+    }
+
+    function onLoadToShare(imageData){
+      urltoFile(imageData, 'image.jpg','image/jpeg')
+        .then(file => { 
+          navigator.share({
+            files: [file],
+            text: 'Minha criação no #FunFic'
+          })
+          .then(() => console.log('Share was successful.'))
+          .catch((error) => console.log('Sharing failed', error));
+        });
+    }
+
+    var widgetSaveSaveCodeEl = document.getElementById('widgetSaveSaveCode');
+    var widgetSaveSaveImageEl = document.getElementById('widgetSaveSaveImage');
+    var widgetSaveShareEl = document.getElementById('widgetSaveShare');
+
+    widgetSaveSaveCodeEl.addEventListener('click', event => {
+      download(editor.getValue(), true, 'sketch.js', 'text/javascript')
+    });
+    
+    widgetSaveSaveImageEl.addEventListener('click', event => {
+      imageLoaded = onLoadToSave;
+      resultFrame.contentWindow.postMessage({type:"getImage"});
+    });
+
+    if (navigator.canShare) {
+      widgetSaveShareEl.addEventListener('click', event => {
+        imageLoaded = onLoadToShare;
+        resultFrame.contentWindow.postMessage({type:"getImage"});
+      });
+    } else {
+      widgetSaveShareEl.style.display = "none";
+      console.error(`Your system doesn't support sharing files.`);
+    }
   });
 
   /*

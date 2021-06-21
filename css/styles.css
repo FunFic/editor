@@ -101,7 +101,7 @@ ICONS
 }
 
 /*Template*/
-.container-template .btn{
+.container-buttons .btn{
     background-color: #DDD;
     width: 100%;
     height: 60px;
@@ -110,7 +110,7 @@ ICONS
     justify-content: center;
     margin-bottom: 10px;
 }
-.container-template .btn:hover{
+.container-buttons .btn:hover{
     background-color: #BBB;
 }
 
