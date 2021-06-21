@@ -12,6 +12,14 @@ body {
 {
     height: 100%;
 }
+#result {
+    width: 100%;
+    height: 100%;
+}
+
+/*
+MENU
+*/
 .menu {
     width: 80px;
 }
@@ -32,12 +40,10 @@ body {
     background-position: center center;
     background-repeat: no-repeat;
 }
-#result {
-    width: 100%;
-    height: 100%;
-}
 
-
+/*
+ICONS
+*/
 .menu ol li a#newBtn{
     background-image: url(../images/icones2/add.png);
 }
@@ -92,6 +98,20 @@ body {
 }
 .menu ol li a#saveBtn:hover{
     background-image: url(../images/icones/down.png);
+}
+
+/*Template*/
+.container-template .btn{
+    background-color: #DDD;
+    width: 100%;
+    height: 60px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 10px;
+}
+.container-template .btn:hover{
+    background-color: #BBB;
 }
 
 /*bootstrap medium layout*/

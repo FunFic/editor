@@ -123,6 +123,26 @@ function draw() {
     popup.show();
   }
 
+  //New
+  var newBtnEl = document.getElementById('newBtn');
+  newBtnEl.addEventListener('click', function (event) {
+    event.preventDefault();
+
+
+    showPopup("Novo", `
+    <div class="container-fluid container-template">
+      <div class="row">
+        <div class="col-sm-4"><div class="btn">Fanfic com fundo</div></div>
+        <div class="col-sm-4"><div class="btn">Personagem com balão</div></div>
+        <div class="col-sm-4"><div class="btn">Meme</div></div>
+        <div class="col-sm-4"><div class="btn">Desenho livre</div></div>
+        <div class="col-sm-4"><div class="btn">Limpo</div></div>
+        <div class="col-sm-4"><div class="btn">Ajuda</div></div>
+      </div>
+    </div>
+    `);
+  });
+
   //Background
   var backgroundBtnEl = document.getElementById('backgroundBtn');
   backgroundBtnEl.addEventListener('click', function (event) {
@@ -161,6 +181,84 @@ function draw() {
       }
     }
     update();
+  });
+
+  //Texto
+  var textBtnEl = document.getElementById('textBtn');
+  textBtnEl.addEventListener('click', function (event) {
+    event.preventDefault();
+
+    showPopup("Texto", ``);
+  });
+
+  //Image
+  var imageBtnEl = document.getElementById('imageBtn');
+  imageBtnEl.addEventListener('click', function (event) {
+    event.preventDefault();
+
+    showPopup("Imagem", `
+    <div class="form-group">
+      <label for="widgetImageFile">Imagem</label>
+      <input type="file" class="form-control-file" id="widgetImageFile">
+    </div>
+    <label for="widgetImageX" class="form-label">X</label>
+    <input type="range" class="form-range" min="0" max="500" id="widgetImageX">
+    <label for="widgetImageY" class="form-label">Y</label>
+    <input type="range" class="form-range" min="0" max="500" id="widgetImageY">
+    <label for="widgetImageScale" class="form-label">Escala</label>
+    <input type="range" class="form-range" min="0" max="3" value="1" step="0.01" id="widgetImageScale">
+    `);
+
+    var widgetImageFileEl = document.getElementById('widgetImageFile');
+    var widgetImageXEl = document.getElementById('widgetImageX');
+    var widgetImageYEl = document.getElementById('widgetImageY');
+    var widgetImageScaleEl = document.getElementById('widgetImageScale');
+    widgetImageXEl.addEventListener('change', event => update());
+    widgetImageYEl.addEventListener('change', event => update());
+    widgetImageScaleEl.addEventListener('change', event => update());
+
+    var base64data = "";
+    widgetImageFileEl.addEventListener('change', event => {
+      const [file] = widgetImageFileEl.files;
+      if (file) {
+        var url = URL.createObjectURL(file);
+        var reader = new FileReader();
+        reader.readAsDataURL(file); 
+        reader.onloadend = function() {
+          base64data = reader.result;            
+          update();
+        }
+      }
+    });
+
+    function update(){
+      reset();
+      addToBegin(`var img
+        function preload(){
+            var raw = new Image()
+            raw.src='${base64data}'
+            raw.onload = function() {
+                img = createImage(raw.width, raw.height)
+                img.drawingContext.drawImage(raw, 0, 0)
+            }
+        }
+      `)
+      addToFunction("draw", `
+        push()
+          scale(${widgetImageScaleEl.value})
+          if(img) image(img, ${widgetImageXEl.value}, ${widgetImageYEl.value})
+        pop()
+      `);
+    }
+    update();
+  });
+
+  //Desenho
+  var drawBtnEl = document.getElementById('drawBtn');
+  drawBtnEl.addEventListener('click', function (event) {
+    event.preventDefault();
+
+    showPopup("Desenho", ``);
   });
 
   //Bubble
@@ -249,66 +347,20 @@ function draw() {
     update();
   });
 
-  //Image
-  var imageBtnEl = document.getElementById('imageBtn');
-  imageBtnEl.addEventListener('click', function (event) {
+  //Ajuda
+  var helpBtnEl = document.getElementById('helpBtn');
+  helpBtnEl.addEventListener('click', function (event) {
     event.preventDefault();
 
-    showPopup("Imagem", `
-    <div class="form-group">
-      <label for="widgetImageFile">Imagem</label>
-      <input type="file" class="form-control-file" id="widgetImageFile">
-    </div>
-    <label for="widgetImageX" class="form-label">X</label>
-    <input type="range" class="form-range" min="0" max="500" id="widgetImageX">
-    <label for="widgetImageY" class="form-label">Y</label>
-    <input type="range" class="form-range" min="0" max="500" id="widgetImageY">
-    <label for="widgetImageScale" class="form-label">Escala</label>
-    <input type="range" class="form-range" min="0" max="3" value="1" step="0.01" id="widgetImageScale">
-    `);
+    showPopup("Ajuda", ``);
+  });
 
-    var widgetImageFileEl = document.getElementById('widgetImageFile');
-    var widgetImageXEl = document.getElementById('widgetImageX');
-    var widgetImageYEl = document.getElementById('widgetImageY');
-    var widgetImageScaleEl = document.getElementById('widgetImageScale');
-    widgetImageXEl.addEventListener('change', event => update());
-    widgetImageYEl.addEventListener('change', event => update());
-    widgetImageScaleEl.addEventListener('change', event => update());
+  //Salvar
+  var saveBtnEl = document.getElementById('saveBtn');
+  saveBtnEl.addEventListener('click', function (event) {
+    event.preventDefault();
 
-    var base64data = "";
-    widgetImageFileEl.addEventListener('change', event => {
-      const [file] = widgetImageFileEl.files;
-      if (file) {
-        var url = URL.createObjectURL(file);
-        var reader = new FileReader();
-        reader.readAsDataURL(file); 
-        reader.onloadend = function() {
-          base64data = reader.result;            
-          update();
-        }
-      }
-    });
-
-    function update(){
-      reset();
-      addToBegin(`var img
-        function preload(){
-            var raw = new Image()
-            raw.src='${base64data}'
-            raw.onload = function() {
-                img = createImage(raw.width, raw.height)
-                img.drawingContext.drawImage(raw, 0, 0)
-            }
-        }
-      `)
-      addToFunction("draw", `
-        push()
-          scale(${widgetImageScaleEl.value})
-          if(img) image(img, ${widgetImageXEl.value}, ${widgetImageYEl.value})
-        pop()
-      `);
-    }
-    update();
+    showPopup("Salvar", ``);
   });
 
   /*
