@@ -128,7 +128,6 @@ function draw() {
   newBtnEl.addEventListener('click', function (event) {
     event.preventDefault();
 
-
     showPopup("Novo", `
     <div class="container-fluid container-template">
       <div class="row">
@@ -147,7 +146,6 @@ function draw() {
   var backgroundBtnEl = document.getElementById('backgroundBtn');
   backgroundBtnEl.addEventListener('click', function (event) {
     event.preventDefault();
-
 
     showPopup("Cor de Fundo", `
     <label for="widgetBackgroundR" class="form-label">Vermelho</label>
@@ -310,7 +308,35 @@ function draw() {
   drawBtnEl.addEventListener('click', function (event) {
     event.preventDefault();
 
-    showPopup("Desenho", ``);
+    showPopup("Desenho", `
+    <label for="widgetDrawSize" class="form-label">Tamanho</label>
+    <input type="range" class="form-range" min="10" max="100" id="widgetDrawSize">
+    <label for="widgetDrawR" class="form-label">Vermelho</label>
+    <input type="range" class="form-range" min="0" max="255" id="widgetDrawR">
+    <label for="widgetDrawG" class="form-label">Verde</label>
+    <input type="range" class="form-range" min="0" max="255" id="widgetDrawG">
+    <label for="widgetDrawB" class="form-label">Azul</label>
+    <input type="range" class="form-range" min="0" max="255" id="widgetDrawB">
+    `);
+    
+    var widgetDrawSizeEl = document.getElementById('widgetDrawSize');
+    var widgetDrawREl = document.getElementById('widgetDrawR');
+    var widgetDrawGEl = document.getElementById('widgetDrawG');
+    var widgetDrawBEl = document.getElementById('widgetDrawB');
+    widgetDrawREl.addEventListener('change', event => update());
+    widgetDrawGEl.addEventListener('change', event => update());
+    widgetDrawBEl.addEventListener('change', event => update());
+
+    function update(){
+      reset();
+      addToFunction("draw", `
+        if(mouseIsPressed){
+            strokeWeight(${widgetDrawSizeEl.value})
+            stroke(${widgetDrawREl.value}, ${widgetDrawGEl.value}, ${widgetDrawBEl.value})
+            line(pmouseX, pmouseY, mouseX, mouseY)
+        }`);
+    }
+    update();
   });
 
   //Bubble
@@ -363,36 +389,36 @@ function draw() {
       reset();
       if(!injector.functionExists(editor.getValue(), "desenhaBalao"))
       addToBegin(`function desenhaBalao(texto, direcao, font, tamanho, x, y) {
-	textFont(font)
-	textSize(tamanho)
-	textLeading(tamanho)
-	textAlign(LEFT, TOP)
-	var linhas = texto.split("\\n")
-	var larguras = linhas.map(function(t) {
-    return textWidth(t) 
-  });
-	var largura = Math.max.apply(Math, larguras);
-	var altura = linhas.length * tamanho;
-	var espaco = 10;
-	noStroke()
-	fill(255)
-	rect(x, y, largura + espaco * 2, altura + espaco * 2, 10, 10, 10, 10)
+        textFont(font)
+        textSize(tamanho)
+        textLeading(tamanho)
+        textAlign(LEFT, TOP)
+        var linhas = texto.split("\\n")
+        var larguras = linhas.map(function(t) {
+          return textWidth(t) 
+        });
+        var largura = Math.max.apply(Math, larguras);
+        var altura = linhas.length * tamanho;
+        var espaco = 10;
+        noStroke()
+        fill(255)
+        rect(x, y, largura + espaco * 2, altura + espaco * 2, 10, 10, 10, 10)
 
-	if (direcao == "Acima") {
-		triangle(x + 10, y, x + 50, y, x + 30, y - 20)
-	} else if (direcao == "Abaixo") {
-		triangle(x + 10, y + altura + espaco * 2, x + 50, y + altura + espaco * 2, x + 30, y + altura + 20 + espaco * 2)
-	} else if (direcao == "Direita") {
-		triangle(x, y + 10, x, y + 50, x - 20, y + 30)
-	} else if (direcao == "Esquerda") {
-		triangle(x + largura + espaco * 2, y + 10, x + largura + espaco * 2, y + 50, x + largura + espaco * 2 + 20, y + 30)
-	}
-	
-	fill(0)
-	text(texto, x + espaco, y + espaco)
-}
+        if (direcao == "Acima") {
+          triangle(x + 10, y, x + 50, y, x + 30, y - 20)
+        } else if (direcao == "Abaixo") {
+          triangle(x + 10, y + altura + espaco * 2, x + 50, y + altura + espaco * 2, x + 30, y + altura + 20 + espaco * 2)
+        } else if (direcao == "Direita") {
+          triangle(x, y + 10, x, y + 50, x - 20, y + 30)
+        } else if (direcao == "Esquerda") {
+          triangle(x + largura + espaco * 2, y + 10, x + largura + espaco * 2, y + 50, x + largura + espaco * 2 + 20, y + 30)
+        }
+        
+        fill(0)
+        text(texto, x + espaco, y + espaco)
+      }
 
-`);
+      `);
 
       addToFunction("draw", `desenhaBalao("${widgetBubbleTextEl.value.replace(/\n/g, '\\\\n')}", "${widgetBubbleDirectionEl.value}", "${widgetBubbleFontEl.value}", ${widgetBubbleSizeEl.value}, ${widgetBubbleXEl.value}, ${widgetBubbleYEl.value});`);
     }
@@ -404,7 +430,46 @@ function draw() {
   helpBtnEl.addEventListener('click', function (event) {
     event.preventDefault();
 
-    showPopup("Ajuda", ``);
+    showPopup("Ajuda", `
+    <div class="accordion" id="accordionExample">
+      <div class="accordion-item">
+        <h2 class="accordion-header" id="headingOne">
+          <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+            Accordion Item #1
+          </button>
+        </h2>
+        <div id="collapseOne" class="accordion-collapse collapse show" aria-labelledby="headingOne" data-bs-parent="#accordionExample">
+          <div class="accordion-body">
+            <strong>This is the first item's accordion body.</strong> It is shown by default, until the collapse plugin adds the appropriate classes that we use to style each element. These classes control the overall appearance, as well as the showing and hiding via CSS transitions. You can modify any of this with custom CSS or overriding our default variables. It's also worth noting that just about any HTML can go within the <code>.accordion-body</code>, though the transition does limit overflow.
+          </div>
+        </div>
+      </div>
+      <div class="accordion-item">
+        <h2 class="accordion-header" id="headingTwo">
+          <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+            Accordion Item #2
+          </button>
+        </h2>
+        <div id="collapseTwo" class="accordion-collapse collapse" aria-labelledby="headingTwo" data-bs-parent="#accordionExample">
+          <div class="accordion-body">
+            <strong>This is the second item's accordion body.</strong> It is hidden by default, until the collapse plugin adds the appropriate classes that we use to style each element. These classes control the overall appearance, as well as the showing and hiding via CSS transitions. You can modify any of this with custom CSS or overriding our default variables. It's also worth noting that just about any HTML can go within the <code>.accordion-body</code>, though the transition does limit overflow.
+          </div>
+        </div>
+      </div>
+      <div class="accordion-item">
+        <h2 class="accordion-header" id="headingThree">
+          <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+            Accordion Item #3
+          </button>
+        </h2>
+        <div id="collapseThree" class="accordion-collapse collapse" aria-labelledby="headingThree" data-bs-parent="#accordionExample">
+          <div class="accordion-body">
+            <strong>This is the third item's accordion body.</strong> It is hidden by default, until the collapse plugin adds the appropriate classes that we use to style each element. These classes control the overall appearance, as well as the showing and hiding via CSS transitions. You can modify any of this with custom CSS or overriding our default variables. It's also worth noting that just about any HTML can go within the <code>.accordion-body</code>, though the transition does limit overflow.
+          </div>
+        </div>
+      </div>
+    </div>
+    `);
   });
 
   //Salvar
