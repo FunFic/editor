@@ -150,11 +150,11 @@ function draw() {
 
 
     showPopup("Cor de Fundo", `
-    <label for="widgetBackgroundR" class="form-label">Red</label>
+    <label for="widgetBackgroundR" class="form-label">Vermelho</label>
     <input type="range" class="form-range" min="0" max="255" id="widgetBackgroundR">
-    <label for="widgetBackgroundG" class="form-label">Green</label>
+    <label for="widgetBackgroundG" class="form-label">Verde</label>
     <input type="range" class="form-range" min="0" max="255" id="widgetBackgroundG">
-    <label for="widgetBackgroundB" class="form-label">Blue</label>
+    <label for="widgetBackgroundB" class="form-label">Azul</label>
     <input type="range" class="form-range" min="0" max="255" id="widgetBackgroundB">
     `);
 
@@ -188,7 +188,59 @@ function draw() {
   textBtnEl.addEventListener('click', function (event) {
     event.preventDefault();
 
-    showPopup("Texto", ``);
+    showPopup("Texto", `
+    <label for="widgetTextText" class="form-label">Texto</label>
+    <textarea class="form-control" id="widgetTextText" rows="3">Meu texto</textarea>
+    <label for="widgetTextFont" class="form-label">Fonte</label>
+    <select class="form-select" id="widgetTextFont">
+      <option>Arial</option>
+      <option>Courier New</option>
+      <option>Georgia</option>
+      <option>Times New Roman</option>
+      <option>Trebuchet MS</option>
+      <option>Verdana</option>
+    </select>
+    <label for="widgetTextX" class="form-label">X</label>
+    <input type="range" class="form-range" min="0" max="500" id="widgetTextX">
+    <label for="widgetTextY" class="form-label">Y</label>
+    <input type="range" class="form-range" min="0" max="500" id="widgetTextY">
+    <label for="widgetTextSize" class="form-label">Tamanho</label>
+    <input type="range" class="form-range" min="10" max="100" id="widgetTextSize">
+    <label for="widgetTextR" class="form-label">Vermelho</label>
+    <input type="range" class="form-range" min="0" max="255" id="widgetTextR">
+    <label for="widgetTextG" class="form-label">Verde</label>
+    <input type="range" class="form-range" min="0" max="255" id="widgetTextG">
+    <label for="widgetTextB" class="form-label">Azul</label>
+    <input type="range" class="form-range" min="0" max="255" id="widgetTextB">
+    `);
+
+    var widgetTextTextEl = document.getElementById('widgetTextText');
+    var widgetTextXEl = document.getElementById('widgetTextX');
+    var widgetTextYEl = document.getElementById('widgetTextY');
+    var widgetTextSizeEl = document.getElementById('widgetTextSize');
+    var widgetTextFontEl = document.getElementById('widgetTextFont');
+    var widgetTextREl = document.getElementById('widgetTextR');
+    var widgetTextGEl = document.getElementById('widgetTextG');
+    var widgetTextBEl = document.getElementById('widgetTextB');
+    widgetTextTextEl.addEventListener('change', event => update());
+    widgetTextTextEl.addEventListener('input', event => update());     
+    widgetTextXEl.addEventListener('change', event => update());
+    widgetTextYEl.addEventListener('change', event => update());
+    widgetTextSizeEl.addEventListener('change', event => update());
+    widgetTextFontEl.addEventListener('change', event => update());
+    widgetTextREl.addEventListener('change', event => update());
+    widgetTextGEl.addEventListener('change', event => update());
+    widgetTextBEl.addEventListener('change', event => update());
+
+    function update(){
+      reset();
+      addToFunction("draw", `
+      textFont("${widgetTextFontEl.value}")
+      textSize(${widgetTextSizeEl.value})
+      fill(${widgetTextREl.value}, ${widgetTextGEl.value}, ${widgetTextBEl.value})
+      text("${widgetTextTextEl.value.replace(/\n/g, '\\\\n')}", ${widgetTextXEl.value}, ${widgetTextYEl.value});`);
+    }
+    update();
   });
 
   //Image
