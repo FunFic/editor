@@ -298,22 +298,37 @@ function draw() {
 
     function update(){
       reset();
-      addToBegin(`var img
-        function preload(){
-            var raw = new Image()
-            raw.src='${base64data}'
-            raw.onload = function() {
-                img = createImage(raw.width, raw.height)
-                img.drawingContext.drawImage(raw, 0, 0)
-            }
-        }
-      `)
+      var imgName = "img";
+      var counter = 1;
+      while(injector.commandExists(editor.getValue(), "img" + counter)){
+        counter++;
+      }
+
+      var command = `
+      var raw${counter} = new Image()
+      raw${counter}.src='${base64data}'
+      raw${counter}.onload = function() {
+        img${counter} = createImage(raw${counter}.width, raw${counter}.height)
+        img${counter}.drawingContext.drawImage(raw${counter}, 0, 0)
+      }`
+
+      if(counter == 1){
+        addToBegin(`var img${counter};
+          function preload(){
+            ${command}
+          }
+        `);
+      }else{
+        addAfterVariable(`img${counter-1}`, `var img${counter};`);
+        addToFunction("preload", `${command}`);
+      }
       addToFunction("draw", `
         push()
           scale(${widgetImageScaleEl.value})
-          if(img) image(img, ${widgetImageXEl.value}, ${widgetImageYEl.value})
+          if(img${counter}) image(img${counter}, ${widgetImageXEl.value}, ${widgetImageYEl.value})
         pop()
       `);
+
     }
     update();
   });
@@ -593,6 +608,16 @@ function draw() {
       js_beautify(
         injector.injectByFunctionName(
           editor.getValue(), functionName, code
+        )
+      )
+    );
+  }
+
+  function addAfterVariable(variableName, code){
+    editor.setValue(
+      js_beautify(
+        injector.addAfterVariableName(
+          editor.getValue(), variableName, code
         )
       )
     );

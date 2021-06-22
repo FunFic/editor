@@ -45,6 +45,25 @@ window.Injection = function() {
         return pegReverser(ast);
     }
 
+    this.addAfterVariableName = function(code, variableName, commandToAdd) {
+        code = replaceScapeChars(code);
+
+        //Abstract Syntax Tree
+        var ast = pegParser(code);
+
+        for(var i = 0; i < ast.body.length; i++){
+            var obj = ast.body[i];
+            if(obj.type === "VariableDeclaration" && obj.declarations[0].id.name === variableName){
+                pegParser(commandToAdd).body.forEach((command, index) => {
+                    ast.body.splice(i+index+1, 0, command);
+                });
+                break;
+            }
+        }
+
+        return pegReverser(ast);
+    }
+    
     this.updateCommand = function(code, commandName, commandToReplace) {
         code = replaceScapeChars(code);
         
@@ -60,6 +79,7 @@ window.Injection = function() {
         return pegReverser(ast);
     }
 
+    //Works with function name or variable name
     this.commandExists = function(code, commandName) {
         code = replaceScapeChars(code);
         
