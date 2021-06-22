@@ -5,7 +5,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>FunFic Editor</title>
-  <link href="css/styles.css" rel="stylesheet">
+  <script src="js/popper.min.js" type="text/javascript" charset="utf-8"></script>
   <link href="css/bootstrap/bootstrap.min.css" rel="stylesheet">
   <script src="js/bootstrap/bootstrap.min.js" type="text/javascript" charset="utf-8"></script>
   <script src="js/ace/ace.js" type="text/javascript" charset="utf-8"></script>
@@ -13,6 +13,7 @@
   <script src="js/pegParser.js" type="text/javascript" charset="utf-8"></script>
   <script src="js/pegReverser.js" type="text/javascript" charset="utf-8"></script>
   <script src="js/injection.js" type="text/javascript" charset="utf-8"></script>
+  <link href="css/styles.css" rel="stylesheet">
 </head>
 
 <body class="funfic">
@@ -21,14 +22,14 @@
     <div class="col col-auto p-0">
       <nav class="menu">
         <ol>
-          <li><a href="#" id="newBtn">Novo</a></li>
-          <li><a href="#" id="backgroundBtn">Fundo</a></li>
-          <li><a href="#" id="textBtn">Text</a></li>
-          <li><a href="#" id="imageBtn">Imagem</a></li>
-          <li><a href="#" id="drawBtn">Desenho</a></li>
-          <li><a href="#" id="bubbleBtn">Balão</a></li>
-          <li><a href="#" id="helpBtn">Ajuda</a></li>
-          <li><a href="#" id="saveBtn">Salvar</a></li>
+          <li><a href="#" id="newBtn" data-bs-toggle="tooltip" data-bs-placement="right" title="Novo Documento">Novo Documento</a></li>
+          <li><a href="#" id="backgroundBtn" data-bs-toggle="tooltip" data-bs-placement="right" title="Alterar cor de Fundo">Fundo</a></li>
+          <li><a href="#" id="textBtn" data-bs-toggle="tooltip" data-bs-placement="right" title="Adicionar Texto">Texto</a></li>
+          <li><a href="#" id="imageBtn" data-bs-toggle="tooltip" data-bs-placement="right" title="Adicionar Imagem">Imagem</a></li>
+          <li><a href="#" id="drawBtn" data-bs-toggle="tooltip" data-bs-placement="right" title="Criar ferramenta de desenho">Desenho</a></li>
+          <li><a href="#" id="bubbleBtn" data-bs-toggle="tooltip" data-bs-placement="right" title="Adicionar balão de texto">Balão</a></li>
+          <li><a href="#" id="helpBtn" data-bs-toggle="tooltip" data-bs-placement="right" title="Obter ajuda">Ajuda</a></li>
+          <li><a href="#" id="saveBtn" data-bs-toggle="tooltip" data-bs-placement="right" title="Salvar">Salvar</a></li>
           <!--<li><a href="javascript:addText();">Text</a></li>
           <li><a href="javascript:addCircle();">Circle</a></li>
           <li><a href="javascript:valida();">Valida</a></li>-->
@@ -80,6 +81,7 @@ function draw() {
 
   editor.setTheme("ace/theme/dracula");
   editor.session.setMode("ace/mode/javascript");
+  editor.setOptions({fontSize: "14pt"});
   
   editor.session.on('change', function(delta) {
       // delta.start, delta.end, delta.lines, delta.action
@@ -89,6 +91,14 @@ function draw() {
   resultFrame.onload = function() {
     resultFrame.contentWindow.postMessage({type:"newCode", code:editor.getValue()});
   };
+
+  /*
+  Tooltips
+  */
+  var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
+  var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
+    return new bootstrap.Tooltip(tooltipTriggerEl)
+  })
 
   /*
   iFrame message receiver

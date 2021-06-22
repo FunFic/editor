@@ -100,6 +100,25 @@ ICONS
     background-image: url(../images/icones/down.png);
 }
 
+/*Tooltip*/
+.tooltip {
+    font-size: 16px;
+    font-weight: bold;
+}
+.tooltip.show {
+    opacity: 1;
+}
+.tooltip-inner{
+    background-color: #FBCBCF;
+    color: #3C5F6F;
+
+}
+.bs-tooltip-auto[data-popper-placement^=right] .tooltip-arrow::before, .bs-tooltip-end .tooltip-arrow::before{
+    border-right-color: #FBCBCF;
+}
+
+
+
 /*Template*/
 .container-buttons .btn{
     background-color: #DDD;
