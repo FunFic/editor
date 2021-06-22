@@ -38,11 +38,11 @@
     </div><!--col-->
     <div class="col p-0" id="editor">function setup() {
     createCanvas(windowWidth, windowHeight);
-    background(0)
+    background(0);
 }
 
 function draw() {
-    ellipse(mouseX, mouseY, 10, 10);
+  
 }</div><!--col-->
     <div class="col col-12 col-md-6 p-0">
       <iframe id="result" src="result.html"></iframe>
@@ -248,9 +248,9 @@ function draw() {
     function update(){
       reset();
       addToFunction("draw", `
-      textFont("${widgetTextFontEl.value}")
-      textSize(${widgetTextSizeEl.value})
-      fill(${widgetTextREl.value}, ${widgetTextGEl.value}, ${widgetTextBEl.value})
+      textFont("${widgetTextFontEl.value}");
+      textSize(${widgetTextSizeEl.value});
+      fill(${widgetTextREl.value}, ${widgetTextGEl.value}, ${widgetTextBEl.value});
       text("${widgetTextTextEl.value.replace(/\n/g, '\\\\n')}", ${widgetTextXEl.value}, ${widgetTextYEl.value});`);
     }
     update();
@@ -305,11 +305,11 @@ function draw() {
       }
 
       var command = `
-      var raw${counter} = new Image()
-      raw${counter}.src='${base64data}'
+      var raw${counter} = new Image();
+      raw${counter}.src='${base64data}';
       raw${counter}.onload = function() {
-        img${counter} = createImage(raw${counter}.width, raw${counter}.height)
-        img${counter}.drawingContext.drawImage(raw${counter}, 0, 0)
+        img${counter} = createImage(raw${counter}.width, raw${counter}.height);
+        img${counter}.drawingContext.drawImage(raw${counter}, 0, 0);
       }`
 
       if(counter == 1){
@@ -323,10 +323,10 @@ function draw() {
         addToFunction("preload", `${command}`);
       }
       addToFunction("draw", `
-        push()
-          scale(${widgetImageScaleEl.value})
-          if(img${counter}) image(img${counter}, ${widgetImageXEl.value}, ${widgetImageYEl.value})
-        pop()
+        push();
+          scale(${widgetImageScaleEl.value});
+          if(img${counter}) image(img${counter}, ${widgetImageXEl.value}, ${widgetImageYEl.value});
+        pop();
       `);
 
     }
@@ -419,33 +419,33 @@ function draw() {
       reset();
       if(!injector.functionExists(editor.getValue(), "desenhaBalao"))
       addToBegin(`function desenhaBalao(texto, direcao, font, tamanho, x, y) {
-        textFont(font)
-        textSize(tamanho)
-        textLeading(tamanho)
-        textAlign(LEFT, TOP)
-        var linhas = texto.split("\\n")
+        textFont(font);
+        textSize(tamanho);
+        textLeading(tamanho);
+        textAlign(LEFT, TOP);
+        var linhas = texto.split("\\n");
         var larguras = linhas.map(function(t) {
-          return textWidth(t) 
+          return textWidth(t);
         });
         var largura = Math.max.apply(Math, larguras);
         var altura = linhas.length * tamanho;
         var espaco = 10;
-        noStroke()
-        fill(255)
-        rect(x, y, largura + espaco * 2, altura + espaco * 2, 10, 10, 10, 10)
+        noStroke();
+        fill(255);
+        rect(x, y, largura + espaco * 2, altura + espaco * 2, 10, 10, 10, 10);
 
         if (direcao == "Acima") {
-          triangle(x + 10, y, x + 50, y, x + 30, y - 20)
+          triangle(x + 10, y, x + 50, y, x + 30, y - 20);
         } else if (direcao == "Abaixo") {
-          triangle(x + 10, y + altura + espaco * 2, x + 50, y + altura + espaco * 2, x + 30, y + altura + 20 + espaco * 2)
+          triangle(x + 10, y + altura + espaco * 2, x + 50, y + altura + espaco * 2, x + 30, y + altura + 20 + espaco * 2);
         } else if (direcao == "Direita") {
-          triangle(x, y + 10, x, y + 50, x - 20, y + 30)
+          triangle(x, y + 10, x, y + 50, x - 20, y + 30);
         } else if (direcao == "Esquerda") {
-          triangle(x + largura + espaco * 2, y + 10, x + largura + espaco * 2, y + 50, x + largura + espaco * 2 + 20, y + 30)
+          triangle(x + largura + espaco * 2, y + 10, x + largura + espaco * 2, y + 50, x + largura + espaco * 2 + 20, y + 30);
         }
         
-        fill(0)
-        text(texto, x + espaco, y + espaco)
+        fill(0);
+        text(texto, x + espaco, y + espaco);
       }
 
       `);
@@ -590,14 +590,6 @@ function draw() {
   Injector
   */
   var injector = Injection();
-
-  function addText(){
-    addToFunction("draw", "text('Olá mundo', mouseX, mouseY)");
-  }
-
-  function addCircle(){
-    addToFunction("draw", "circle(mouseX, mouseY, 100, 100)");
-  }
 
   function addToBegin(code){
     editor.session.insert({row: 0, column: 0}, code);

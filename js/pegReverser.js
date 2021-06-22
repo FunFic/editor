@@ -14,7 +14,7 @@ window.pegReverser = function() {
         BinaryExpression: (node) =>
             `${pegReverse(node.left)} ${node.operator} ${pegReverse(node.right)}`,
         BlockStatement: (node) =>
-            `{${node.body.map((expr) => `\n${pegReverse(expr)}`).join("")}\n}`,
+            `{${node.body.map((expr) => `\n${pegReverse(expr)};`).join("")}\n}`,
         CallExpression: (node) =>
             `${pegReverse(node.callee)}(${node.arguments
             .map((arg) => pegReverse(arg))
@@ -45,7 +45,7 @@ window.pegReverser = function() {
             `${node.kind} ${node.declarations.map((decl) => pegReverse(decl)).join(", ")}`,
         VariableDeclarator: (node) =>
             node.init == null
-            ? `${pegReverse(node.id)}`
+            ? `${pegReverse(node.id)};`
             : `${pegReverse(node.id)} = ${pegReverse(node.init)}`,
         IfStatement: (node) =>
             `if(${pegReverse(node.test)}) ${pegReverse(node.consequent)}`
