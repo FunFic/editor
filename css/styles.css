@@ -140,12 +140,16 @@ ICONS
         height: 50%;
     }
     .menu {
-        width: 60px;
+        width: 40px;
     }
     .menu ol li a{
-        height: 50px;
+        height: 30px;
     }
     .menu ol li{
         padding: 5px;
     }
+    /*Disabilita o tooltip*/
+    .tooltip {
+        display: none !important;
+     }
 }
