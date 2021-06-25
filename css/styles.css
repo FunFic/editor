@@ -150,7 +150,8 @@ ICONS
     bottom: 50px;
     right: 0px;
     padding: 10px;
-    z-index: 11
+    z-index: 11;
+    max-width: 100%;
 }
 
 #errorContent {
