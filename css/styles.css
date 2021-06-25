@@ -133,6 +133,11 @@ ICONS
     background-color: #BBB;
 }
 
+/*Modal*/
+.modal-backdrop.show{
+    opacity: 0;
+}
+
 /*bootstrap medium layout*/
 @media screen and (max-width: 767px) {
     .funfic .col
