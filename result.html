@@ -39,9 +39,13 @@
     function getImage(){
         var canvas = document.querySelector("canvas");
         var data = canvas.toDataURL("image/jpeg");
-        parent.imageLoaded(data);
+        parent.onImageLoaded(data);
     }
-  </script>
+
+    window.onerror = function (msg, url, line) {
+      parent.onError(msg, line);
+    }
+</script>
 </head>
 <body>
 </body>

@@ -138,6 +138,26 @@ ICONS
     opacity: 0;
 }
 
+/*Errors*/
+#errorsBtn{
+    position: absolute;
+    bottom: 10px;
+    right: 10px;
+}
+
+#errorList{
+    position: fixed;
+    bottom: 50px;
+    right: 0px;
+    padding: 10px;
+    z-index: 11
+}
+
+#errorContent {
+    background: #f5c2c7;
+    color: #842029;
+}
+
 /*bootstrap medium layout*/
 @media screen and (max-width: 767px) {
     .funfic .col

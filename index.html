@@ -64,6 +64,21 @@
     </div>
   </div>
 </div>
+
+<button type="button" class="btn btn-light" id="errorsBtn">Erros <span id="errorsTotal" class="badge bg-danger">9</span></button>
+
+<div id="errorList">
+  <div id="errorDescription" class="toast hide" role="alert" aria-live="assertive" aria-atomic="true">
+    <div class="toast-header">
+      <strong class="me-auto">Erros</strong>
+      <button id="errorClose" type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+    </div>
+    <div id="errorContent" class="toast-body">
+      <!--dynamic content-->
+    </div>
+  </div>
+</div>
+
 </body>
 <script>
 
@@ -97,6 +112,7 @@ function draw() {
   });
 
   resultFrame.onload = function() {
+    resetErrors();
     resultFrame.contentWindow.postMessage({type:"newCode", code:editor.getValue()});
   };
 
@@ -111,7 +127,68 @@ function draw() {
   /*
   iFrame message receiver
   */
-  var imageLoaded;//store temporary function
+  //store temporary function
+  var onImageLoaded;
+  var onError;
+
+  /*
+  Error
+  */
+  var errorsBtnEl = document.getElementById('errorsBtn');
+  var errorDescriptionEl = document.getElementById('errorDescription');
+  var errorContentEl = document.getElementById('errorContent');
+  var errorCloseEl = document.getElementById('errorClose');
+  var errorsTotalEl = document.getElementById('errorsTotal');
+  var errorCount, errorWasVisible;
+
+  function resetErrors() {
+    errorCount = 0;
+    errorsBtnEl.style.display = "none";
+    errorContentEl.innerHTML = "";
+    hideErrorList();
+  }
+
+  function isErrorListVisible(){
+    console.log(errorDescriptionEl.classList.contains("show"));
+    return errorDescriptionEl.classList.contains("show");
+  }
+
+  function showErrorList(){
+    errorDescriptionEl.classList.remove("hide");
+    errorDescriptionEl.classList.add("show");
+  }
+
+  function hideErrorList(){
+    errorDescriptionEl.classList.add("hide");
+    errorDescriptionEl.classList.remove("show");
+  }
+
+  errorsBtnEl.addEventListener("click", () => {
+    if(isErrorListVisible()){
+      errorWasVisible = false;
+      hideErrorList();
+    }else{
+      errorWasVisible = true;
+      showErrorList();
+    }
+  });
+
+  errorCloseEl.addEventListener("click", () => {
+    errorWasVisible = false;
+    hideErrorList();
+  });
+
+  onError = function(msg, line){
+    errorCount++;
+    errorsTotalEl.innerText = errorCount;
+    errorsBtnEl.style.display = "";
+    errorContentEl.innerHTML += `Linha ${line}: ${msg}`;
+    console.log("Message : " + msg );
+    console.log("Line number : " + line );
+    if(errorWasVisible){
+      showErrorList();
+    }
+  }
 
   /*
   Popup
@@ -581,13 +658,13 @@ function draw() {
     });
     
     widgetSaveSaveImageEl.addEventListener('click', event => {
-      imageLoaded = onLoadToSave;
+      onImageLoaded = onLoadToSave;
       resultFrame.contentWindow.postMessage({type:"getImage"});
     });
 
     if (navigator.canShare) {
       widgetSaveShareEl.addEventListener('click', event => {
-        imageLoaded = onLoadToShare;
+        onImageLoaded = onLoadToShare;
         resultFrame.contentWindow.postMessage({type:"getImage"});
       });
     } else {
