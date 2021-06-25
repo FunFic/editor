@@ -36,14 +36,9 @@
         </ol>
       </nav>
     </div><!--col-->
-    <div class="col p-0" id="editor">function setup() {
-    createCanvas(windowWidth, windowHeight);
-    background(0);
-}
-
-function draw() {
-  
-}</div><!--col-->
+    <div class="col p-0" id="editor">
+      <!--dynamic content-->
+    </div><!--col-->
     <div class="col col-12 col-md-6 p-0">
       <iframe id="result" src="result.html"></iframe>
     </div><!--col-->
@@ -72,6 +67,15 @@ function draw() {
 </body>
 <script>
 
+  const initialCode = `function setup() {
+    createCanvas(windowWidth, windowHeight);
+    background(0);
+}
+
+function draw() {
+    
+}`;
+
   /*
   Editor
   */
@@ -79,9 +83,13 @@ function draw() {
   var resultFrame = document.getElementById("result");
   var prevValue, prevCursor;
 
+  editor.setValue(initialCode);
+
   editor.setTheme("ace/theme/dracula");
   editor.session.setMode("ace/mode/javascript");
   editor.setOptions({fontSize: "14pt"});
+  editor.navigateTo(6, 4);
+  editor.focus();
   
   editor.session.on('change', function(delta) {
       // delta.start, delta.end, delta.lines, delta.action
