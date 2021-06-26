@@ -98,13 +98,16 @@ function draw() {
   var resultFrame = document.getElementById("result");
   var prevValue, prevCursor;
 
-  editor.setValue(initialCode);
-
   editor.setTheme("ace/theme/dracula");
   editor.session.setMode("ace/mode/javascript");
   editor.setOptions({fontSize: "14pt"});
-  editor.navigateTo(6, 4);
-  editor.focus();
+
+  function resetEditor(){
+    editor.setValue(initialCode);
+    editor.navigateTo(6, 4);
+    editor.focus();
+  }
+  resetEditor();
   
   editor.session.on('change', function(delta) {
       // delta.start, delta.end, delta.lines, delta.action
@@ -231,16 +234,64 @@ function draw() {
     showPopup("Novo", `
     <div class="container-fluid container-buttons">
       <div class="row">
-        <div class="col-sm-4"><div class="btn">Fanfic com fundo</div></div>
-        <div class="col-sm-4"><div class="btn">Personagem com balão</div></div>
-        <div class="col-sm-4"><div class="btn">Meme</div></div>
-        <div class="col-sm-4"><div class="btn">Desenho livre</div></div>
-        <div class="col-sm-4"><div class="btn">Limpo</div></div>
-        <div class="col-sm-4"><div class="btn">Ajuda</div></div>
+        <div class="col-sm-4"><div class="btn" id="templateBtnFanFic">Fanfic com fundo</div></div>
+        <div class="col-sm-4"><div class="btn" id="templateBtnCharacter">Personagem com balão</div></div>
+        <div class="col-sm-4"><div class="btn" id="templateBtnMeme">Meme</div></div>
+        <div class="col-sm-4"><div class="btn" id="templateBtnClean">Limpo</div></div>
+        <div class="col-sm-4"><div class="btn" id="templateBtnHelp">Ajuda</div></div>
       </div>
     </div>
     `);
+
+    var templateBtnFanFicEl = document.getElementById('templateBtnFanFic');
+    templateBtnFanFicEl.addEventListener('click', function (event) {
+      event.preventDefault();
+
+      popup.hide();
+      setTimeout(() => {
+        showPopup("Fanfic com fundo", `Em construção`);
+      }, 500);
+    });
+
+    var templateBtnCharacterEl = document.getElementById('templateBtnCharacter');
+    templateBtnCharacterEl.addEventListener('click', function (event) {
+      event.preventDefault();
+
+      popup.hide();
+      setTimeout(() => {
+        showPopup("Personagem com balão", `Em construção`);
+      }, 500);
+    });
+
+    var templateBtnMemeEl = document.getElementById('templateBtnMeme');
+    templateBtnMemeEl.addEventListener('click', function (event) {
+      event.preventDefault();
+
+      popup.hide();
+      setTimeout(() => {
+        showPopup("Meme", `Em construção`);
+      }, 500);
+    });
+
+    var templateBtnCleanEl = document.getElementById('templateBtnClean');
+    templateBtnCleanEl.addEventListener('click', function (event) {
+      event.preventDefault();
+
+      popup.hide();
+      resetEditor();
+    });
+
+    var templateBtnHelpEl = document.getElementById('templateBtnHelp');
+    templateBtnHelpEl.addEventListener('click', function (event) {
+      event.preventDefault();
+
+      popup.hide();
+      setTimeout(() => {
+        showPopupHelp();
+      }, 500);
+    });
   });
+
 
   //Background
   var backgroundBtnEl = document.getElementById('backgroundBtn');
@@ -544,7 +595,10 @@ function draw() {
   var helpBtnEl = document.getElementById('helpBtn');
   helpBtnEl.addEventListener('click', function (event) {
     event.preventDefault();
+    showPopupHelp();
+  });
 
+  function showPopupHelp(){
     showPopup("Ajuda", `
     <div class="accordion" id="accordionExample">
       <div class="accordion-item">
@@ -585,7 +639,7 @@ function draw() {
       </div>
     </div>
     `);
-  });
+  }
 
   //Salvar
   var saveBtnEl = document.getElementById('saveBtn');
