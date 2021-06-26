@@ -5,6 +5,7 @@ body {
     background-color: #FFF;
     height: 100%;
     height: 100%;
+    color: #3C5F6F;
 }
 .funfic .container-fluid,
 .funfic .row,
@@ -15,6 +16,101 @@ body {
 #result {
     width: 100%;
     height: 100%;
+}
+
+.btn,
+.btn.active,
+.btn:active,
+.btn:focus{
+    background-color: #3C5F6F;
+    border-color: #3C5F6F;
+    color: #FDE4E7;
+}
+.btn:active,
+.btn:focus,
+.btn.active:focus,
+.btn:active:focus{
+    box-shadow: 0 0 0 0.2rem #3C5F6F !important;
+}
+
+.btn:hover{
+    background-color: #637F8B;
+    border-color: #637F8B;
+    color: #FEF4F5;
+}
+
+.btn-primary,
+.btn-primary.active,
+.btn-primary:active,
+.btn-primary:focus{
+    background-color: #c8ea98;
+    border-color: #c8ea98;
+    color: #3c6f58;
+}
+.btn-primary:active,
+.btn-primary:focus,
+.btn-primary.active:focus,
+.btn-primary:active:focus{
+    box-shadow: 0 0 0 0.2rem #c8ea98 !important;
+}
+
+.btn-primary:hover{
+    background-color: #DEF2C1;
+    border-color: #DEF2C1;
+    color: #8AA89A;
+}
+
+
+.btn-secondary,
+.btn-secondary.active,
+.btn-secondary:active,
+.btn-secondary:focus{background-color: #FBCBCF;
+    border-color: #FBCBCF;
+    color: #3C5F6F;
+    /* background-color: #F6D6B3;
+    border-color: #F6D6B3;
+    color: #9D423A; */
+}
+.btn-secondary:active,
+.btn-secondary:focus,
+.btn-secondary.active:focus,
+.btn-secondary:active:focus{
+    box-shadow: 0 0 0 0.2rem #fdf2f3 !important;
+    /* box-shadow: 0 0 0 0.2rem #F6D6B3 !important; */
+}
+
+.btn-secondary:hover{
+    background-color: #FCDFE2;
+    border-color: #FCDFE2;
+    color: #768F9A;
+    /* background-color: #F9E6D1;
+    border-color: #F9E6D1;
+    color: #C48D88; */
+}
+
+.form-range:focus::-webkit-slider-thumb {
+    box-shadow: 0 0 0 1px #fff, 0 0 0 0.25rem #FEF4F5AA;
+}
+.form-range:focus::-moz-range-thumb {
+    box-shadow: 0 0 0 1px #fff, 0 0 0 0.25rem #FEF4F5AA;
+}
+.form-range::-webkit-slider-thumb {
+    background-color: #FBCBCF;
+}
+.form-range::-webkit-slider-thumb:active {
+    background-color: #FEF4F5;
+}
+.form-range::-moz-range-thumb {
+    background-color: #FCDFE2;
+}
+
+.accordion-button:not(.collapsed) {
+    color: #3C5F6F;
+    background-color: #D8DFE2;
+}
+
+.bg-secondary {
+    background-color: #3C5F6F!important;
 }
 
 /*
@@ -121,16 +217,12 @@ ICONS
 
 /*Template*/
 .container-buttons .btn{
-    background-color: #DDD;
     width: 100%;
     height: 60px;
     display: flex;
     align-items: center;
     justify-content: center;
     margin-bottom: 10px;
-}
-.container-buttons .btn:hover{
-    background-color: #BBB;
 }
 
 /*Modal*/
