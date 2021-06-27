@@ -9,6 +9,13 @@ function draw() {
 }`;
 
   /*
+  Layout
+  */
+  var menuEl = document.getElementById("menu");
+  var editorEl = document.getElementById("editor");
+  var resultEl = document.getElementById("result");
+
+  /*
   Editor
   */
   var editor = ace.edit("editor");
@@ -94,7 +101,6 @@ function draw() {
 Result 
 */
 var iframeEl;
-var resultEl = document.getElementById("result");
 
 //message receiver
 //store temporary function
@@ -1040,6 +1046,17 @@ const iframeHtml = `<!DOCTYPE html>
     editor.setValue(
       js_beautify(code)
     );
+  }
+
+  /*
+  Mobile
+  */
+  //Set absolute height to avoid resizing when keyboard appears
+  if(window.innerWidth < 767){
+    var halfHeight = (window.innerHeight / 2) + "px";
+    menuEl.style.height = halfHeight;
+    editorEl.style.height = halfHeight;
+    resultEl.style.height = halfHeight;
   }
   
   /*
