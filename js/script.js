@@ -18,7 +18,7 @@ function draw() {
     //Set absolute height to avoid resizing when keyboard appears
     var halfHeight = "";
     if(window.innerWidth < 767){
-      halfHeight = (window.innerHeight / 2) + "px";
+      halfHeight = (window.innerHeight / 2);
       if(menuEl.style.height){
         //dont let rezise when mobile appears
         var actualHeight = parseInt(menuEl.style.height);
@@ -26,9 +26,9 @@ function draw() {
           return;
       }
     }
-    menuEl.style.height = halfHeight;
-    editorEl.style.height = halfHeight;
-    resultEl.style.height = halfHeight;
+    menuEl.style.height = halfHeight + "px";
+    editorEl.style.height = halfHeight + "px";
+    resultEl.style.height = halfHeight + "px";
   }
   window.addEventListener('resize', resize);
   resize();
