@@ -17,6 +17,7 @@ function draw() {
   editor.setTheme("ace/theme/funfic");
   editor.session.setMode("ace/mode/javascript");
   editor.setOptions({fontSize: "14pt"});
+  editor.textInput.getElement().id = "editorTextArea";
 
   function resetEditor(){
     editor.setValue(initialCode);
@@ -105,6 +106,7 @@ function showResult(){
   if(iframeEl)
     resultEl.removeChild(iframeEl);
   iframeEl = document.createElement("iframe");
+  iframeEl.title = "Resultado";
   resultEl.appendChild(iframeEl);
   iframeEl.contentWindow.document.open();
   iframeEl.contentWindow.document.write(getIframeHtml());
@@ -1037,14 +1039,16 @@ function getIframeHtml(){
   /*
   Service Worker
   */
-  if ('serviceWorker' in navigator) {
-    navigator.serviceWorker.register('service-worker.js')
-    .then(function(registration) {
-      // Registration was successful
-      // console.log('ServiceWorker registration successful with scope: ', registration.scope);
-    }).catch(function(err) {
-      // registration failed :(
-      // console.log('ServiceWorker registration failed: ', err);
-    });
+  if (location.hostname !== "localhost" && location.hostname !== "127.0.0.1"){
+    if ('serviceWorker' in navigator) {
+      navigator.serviceWorker.register('service-worker.js')
+      .then(function(registration) {
+        // Registration was successful
+        // console.log('ServiceWorker registration successful with scope: ', registration.scope);
+      }).catch(function(err) {
+        // registration failed :(
+        // console.log('ServiceWorker registration failed: ', err);
+      });
+    }
   }
 });//DOMContentLoaded
