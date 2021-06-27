@@ -253,7 +253,28 @@ function draw() {
 
       popup.hide();
       setTimeout(() => {
-        showPopup("Fanfic com fundo", `Em construção`);
+        showPopup("Fanfic com fundo", `
+          <h3>Cor de Fundo</h3>
+          ${backgroundHtml}
+
+          <h3>Imagem</h3>
+          ${imageHtml}
+          
+          <h3>Texto</h3>
+          ${textHtml}`);
+          
+          function update(){
+            reset();
+            backgroundWidgetOnChange();
+            imageWidgetOnChange();
+            textWidgetOnChange();
+          }
+
+          backgroundWidgetInit(update);
+          imageWidgetInit(update);
+          textWidgetInit(update);
+
+          update();
       }, 500);
     });
 
@@ -263,7 +284,23 @@ function draw() {
 
       popup.hide();
       setTimeout(() => {
-        showPopup("Personagem com balão", `Em construção`);
+        showPopup("Personagem com balão", `
+          <h3>Imagem do personagem</h3>
+          ${imageHtml}
+
+          <h3>Balão</h3>
+          ${bubbleHtml}`);
+          
+          function update(){
+            reset();
+            imageWidgetOnChange();
+            bubbleWidgetOnChange();
+          }
+
+          imageWidgetInit(update);
+          bubbleWidgetInit(update);
+
+          update();
       }, 500);
     });
 
@@ -273,7 +310,23 @@ function draw() {
 
       popup.hide();
       setTimeout(() => {
-        showPopup("Meme", `Em construção`);
+        showPopup("Meme", `
+          <h3>Imagem do Meme</h3>
+          ${imageHtml}
+
+          <h3>Text</h3>
+          ${textHtml}`);
+          
+          function update(){
+            reset();
+            imageWidgetOnChange();
+            textWidgetOnChange();
+          }
+
+          imageWidgetInit(update);
+          textWidgetInit(update);
+
+          update();
       }, 500);
     });
 
@@ -298,50 +351,51 @@ function draw() {
 
 
   //Background
-  var backgroundBtnEl = document.getElementById('backgroundBtn');
-  backgroundBtnEl.addEventListener('click', function (event) {
-    event.preventDefault();
-
-    showPopup("Cor de Fundo", `
+  const backgroundHtml = `
     <label for="widgetBackgroundR" class="form-label">Vermelho</label>
     <input type="range" class="form-range" min="0" max="255" id="widgetBackgroundR">
     <label for="widgetBackgroundG" class="form-label">Verde</label>
     <input type="range" class="form-range" min="0" max="255" id="widgetBackgroundG">
     <label for="widgetBackgroundB" class="form-label">Azul</label>
-    <input type="range" class="form-range" min="0" max="255" id="widgetBackgroundB">
-    `);
+    <input type="range" class="form-range" min="0" max="255" id="widgetBackgroundB">`;
+  var backgroundBtnEl = document.getElementById('backgroundBtn');
+  backgroundBtnEl.addEventListener('click', function (event) {
+    event.preventDefault();
 
-    var widgetBackgroundREl = document.getElementById('widgetBackgroundR');
-    var widgetBackgroundGEl = document.getElementById('widgetBackgroundG');
-    var widgetBackgroundBEl = document.getElementById('widgetBackgroundB');
+    showPopup("Cor de Fundo", backgroundHtml);
+    function update(){
+      reset();
+      backgroundWidgetOnChange();
+    }
+    backgroundWidgetInit(update);
+    update();
+  });
+  var widgetBackgroundREl, widgetBackgroundGEl, widgetBackgroundBEl;
+  function backgroundWidgetInit(update) {
+    widgetBackgroundREl = document.getElementById('widgetBackgroundR');
+    widgetBackgroundGEl = document.getElementById('widgetBackgroundG');
+    widgetBackgroundBEl = document.getElementById('widgetBackgroundB');
     widgetBackgroundREl.addEventListener('change', event => update());
     widgetBackgroundGEl.addEventListener('change', event => update());
     widgetBackgroundBEl.addEventListener('change', event => update());
-
-    function update(){
-      reset();
-      var r = widgetBackgroundREl.value;
-      var g = widgetBackgroundGEl.value;
-      var b = widgetBackgroundBEl.value;
-      if(injector.commandExists(editor.getValue(), "background")){
-        editor.setValue(
-          js_beautify(
-            injector.updateCommand(editor.getValue(), "background", `background(${r}, ${g}, ${b})`)
-          )
-        );
-      }else{
-        addToFunction("draw", `background(${r}, ${g}, ${b})`);
-      }
+  }
+  function backgroundWidgetOnChange(){
+    var r = widgetBackgroundREl.value;
+    var g = widgetBackgroundGEl.value;
+    var b = widgetBackgroundBEl.value;
+    if(injector.commandExists(editor.getValue(), "background")){
+      editor.setValue(
+        js_beautify(
+          injector.updateCommand(editor.getValue(), "background", `background(${r}, ${g}, ${b})`)
+        )
+      );
+    }else{
+      addToFunction("draw", `background(${r}, ${g}, ${b})`);
     }
-    update();
-  });
+  }
 
   //Texto
-  var textBtnEl = document.getElementById('textBtn');
-  textBtnEl.addEventListener('click', function (event) {
-    event.preventDefault();
-
-    showPopup("Texto", `
+  const textHtml = `
     <label for="widgetTextText" class="form-label">Texto</label>
     <textarea class="form-control" id="widgetTextText" rows="3">Meu texto</textarea>
     <label for="widgetTextFont" class="form-label">Fonte</label>
@@ -364,17 +418,29 @@ function draw() {
     <label for="widgetTextG" class="form-label">Verde</label>
     <input type="range" class="form-range" min="0" max="255" id="widgetTextG">
     <label for="widgetTextB" class="form-label">Azul</label>
-    <input type="range" class="form-range" min="0" max="255" id="widgetTextB">
-    `);
+    <input type="range" class="form-range" min="0" max="255" id="widgetTextB">`;
+  var textBtnEl = document.getElementById('textBtn');
+  textBtnEl.addEventListener('click', function (event) {
+    event.preventDefault();
 
-    var widgetTextTextEl = document.getElementById('widgetTextText');
-    var widgetTextXEl = document.getElementById('widgetTextX');
-    var widgetTextYEl = document.getElementById('widgetTextY');
-    var widgetTextSizeEl = document.getElementById('widgetTextSize');
-    var widgetTextFontEl = document.getElementById('widgetTextFont');
-    var widgetTextREl = document.getElementById('widgetTextR');
-    var widgetTextGEl = document.getElementById('widgetTextG');
-    var widgetTextBEl = document.getElementById('widgetTextB');
+    showPopup("Texto", textHtml);
+    function update(){
+      reset();
+      textWidgetOnChange();
+    }
+    textWidgetInit(update);
+    update();
+  });
+  var widgetTextTextEl, widgetTextXEl, widgetTextYEl, widgetTextSizeEl, widgetTextFontEl, widgetTextREl, widgetTextGEl, widgetTextBEl;
+  function textWidgetInit(update) {
+    widgetTextTextEl = document.getElementById('widgetTextText');
+    widgetTextXEl = document.getElementById('widgetTextX');
+    widgetTextYEl = document.getElementById('widgetTextY');
+    widgetTextSizeEl = document.getElementById('widgetTextSize');
+    widgetTextFontEl = document.getElementById('widgetTextFont');
+    widgetTextREl = document.getElementById('widgetTextR');
+    widgetTextGEl = document.getElementById('widgetTextG');
+    widgetTextBEl = document.getElementById('widgetTextB');
     widgetTextTextEl.addEventListener('change', event => update());
     widgetTextTextEl.addEventListener('input', event => update());     
     widgetTextXEl.addEventListener('change', event => update());
@@ -384,24 +450,17 @@ function draw() {
     widgetTextREl.addEventListener('change', event => update());
     widgetTextGEl.addEventListener('change', event => update());
     widgetTextBEl.addEventListener('change', event => update());
-
-    function update(){
-      reset();
+  }
+  function textWidgetOnChange(){
       addToFunction("draw", `
       textFont("${widgetTextFontEl.value}");
       textSize(${widgetTextSizeEl.value});
       fill(${widgetTextREl.value}, ${widgetTextGEl.value}, ${widgetTextBEl.value});
       text("${widgetTextTextEl.value.replace(/\n/g, '\\\\n')}", ${widgetTextXEl.value}, ${widgetTextYEl.value});`);
-    }
-    update();
-  });
+  }
 
   //Image
-  var imageBtnEl = document.getElementById('imageBtn');
-  imageBtnEl.addEventListener('click', function (event) {
-    event.preventDefault();
-
-    showPopup("Imagem", `
+  const imageHtml = `
     <div class="form-group">
       <label for="widgetImageFile">Imagem</label>
       <input type="file" class="form-control-file" id="widgetImageFile">
@@ -411,18 +470,30 @@ function draw() {
     <label for="widgetImageY" class="form-label">Y</label>
     <input type="range" class="form-range" min="0" max="500" id="widgetImageY">
     <label for="widgetImageScale" class="form-label">Escala</label>
-    <input type="range" class="form-range" min="0" max="3" value="1" step="0.01" id="widgetImageScale">
-    `);
+    <input type="range" class="form-range" min="0" max="3" value="1" step="0.01" id="widgetImageScale">`;
+  var imageBtnEl = document.getElementById('imageBtn');
+  imageBtnEl.addEventListener('click', function (event) {
+    event.preventDefault();
 
-    var widgetImageFileEl = document.getElementById('widgetImageFile');
-    var widgetImageXEl = document.getElementById('widgetImageX');
-    var widgetImageYEl = document.getElementById('widgetImageY');
-    var widgetImageScaleEl = document.getElementById('widgetImageScale');
+    showPopup("Imagem", imageHtml);
+    function update(){
+      reset();
+      imageWidgetOnChange();
+    }
+    imageWidgetInit(update);
+    update();
+  });
+  var widgetImageFileEl, widgetImageXEl, widgetImageYEl, widgetImageScaleEl, widgetImageBase64data;
+  function imageWidgetInit(update){
+    widgetImageFileEl = document.getElementById('widgetImageFile');
+    widgetImageXEl = document.getElementById('widgetImageX');
+    widgetImageYEl = document.getElementById('widgetImageY');
+    widgetImageScaleEl = document.getElementById('widgetImageScale');
     widgetImageXEl.addEventListener('change', event => update());
     widgetImageYEl.addEventListener('change', event => update());
     widgetImageScaleEl.addEventListener('change', event => update());
 
-    var base64data = "";
+    widgetImageBase64data = "";
     widgetImageFileEl.addEventListener('change', event => {
       const [file] = widgetImageFileEl.files;
       if (file) {
@@ -430,55 +501,47 @@ function draw() {
         var reader = new FileReader();
         reader.readAsDataURL(file); 
         reader.onloadend = function() {
-          base64data = reader.result;            
+          widgetImageBase64data = reader.result;            
           update();
         }
       }
     });
-
-    function update(){
-      reset();
-      var imgName = "img";
-      var counter = 1;
-      while(injector.commandExists(editor.getValue(), "img" + counter)){
-        counter++;
-      }
-
-      var command = `
-      var raw${counter} = new Image();
-      raw${counter}.src='${base64data}';
-      raw${counter}.onload = function() {
-        img${counter} = createImage(raw${counter}.width, raw${counter}.height);
-        img${counter}.drawingContext.drawImage(raw${counter}, 0, 0);
-      }`
-
-      if(counter == 1){
-        addToBegin(`var img${counter};
-          function preload(){
-            ${command}
-          }
-        `);
-      }else{
-        addAfterVariable(`img${counter-1}`, `var img${counter};`);
-        addToFunction("preload", `${command}`);
-      }
-      addToFunction("draw", `
-        push();
-          scale(${widgetImageScaleEl.value});
-          if(img${counter}) image(img${counter}, ${widgetImageXEl.value}, ${widgetImageYEl.value});
-        pop();
-      `);
-
+  }
+  function imageWidgetOnChange(){
+    var imgName = "img";
+    var counter = 1;
+    while(injector.commandExists(editor.getValue(), "img" + counter)){
+      counter++;
     }
-    update();
-  });
+
+    var command = `
+    var raw${counter} = new Image();
+    raw${counter}.src='${widgetImageBase64data}';
+    raw${counter}.onload = function() {
+      img${counter} = createImage(raw${counter}.width, raw${counter}.height);
+      img${counter}.drawingContext.drawImage(raw${counter}, 0, 0);
+    }`
+
+    if(counter == 1){
+      addToBegin(`var img${counter};
+        function preload(){
+          ${command}
+        }
+      `);
+    }else{
+      addAfterVariable(`img${counter-1}`, `var img${counter};`);
+      addToFunction("preload", `${command}`);
+    }
+    addToFunction("draw", `
+      push();
+        scale(${widgetImageScaleEl.value});
+        if(img${counter}) image(img${counter}, ${widgetImageXEl.value}, ${widgetImageYEl.value});
+      pop();
+    `);
+  }
 
   //Desenho
-  var drawBtnEl = document.getElementById('drawBtn');
-  drawBtnEl.addEventListener('click', function (event) {
-    event.preventDefault();
-
-    showPopup("Desenho", `
+  const drawHtml = `
     <label for="widgetDrawSize" class="form-label">Tamanho</label>
     <input type="range" class="form-range" min="10" max="100" id="widgetDrawSize">
     <label for="widgetDrawR" class="form-label">Vermelho</label>
@@ -486,35 +549,40 @@ function draw() {
     <label for="widgetDrawG" class="form-label">Verde</label>
     <input type="range" class="form-range" min="0" max="255" id="widgetDrawG">
     <label for="widgetDrawB" class="form-label">Azul</label>
-    <input type="range" class="form-range" min="0" max="255" id="widgetDrawB">
-    `);
-    
-    var widgetDrawSizeEl = document.getElementById('widgetDrawSize');
-    var widgetDrawREl = document.getElementById('widgetDrawR');
-    var widgetDrawGEl = document.getElementById('widgetDrawG');
-    var widgetDrawBEl = document.getElementById('widgetDrawB');
+    <input type="range" class="form-range" min="0" max="255" id="widgetDrawB">`;
+  var drawBtnEl = document.getElementById('drawBtn');
+  drawBtnEl.addEventListener('click', function (event) {
+    event.preventDefault();
+
+    showPopup("Desenho", drawHtml);
+    function update(){
+      reset();
+      drawWidgetOnChange();
+    }
+    drawWidgetInit(update);
+    update();
+  });
+  var widgetDrawSizeEl, widgetDrawREl, widgetDrawGEl, widgetDrawBEl;
+  function drawWidgetInit(update){    
+    widgetDrawSizeEl = document.getElementById('widgetDrawSize');
+    widgetDrawREl = document.getElementById('widgetDrawR');
+    widgetDrawGEl = document.getElementById('widgetDrawG');
+    widgetDrawBEl = document.getElementById('widgetDrawB');
     widgetDrawREl.addEventListener('change', event => update());
     widgetDrawGEl.addEventListener('change', event => update());
     widgetDrawBEl.addEventListener('change', event => update());
-
-    function update(){
-      reset();
-      addToFunction("draw", `
-        if(mouseIsPressed){
-            strokeWeight(${widgetDrawSizeEl.value})
-            stroke(${widgetDrawREl.value}, ${widgetDrawGEl.value}, ${widgetDrawBEl.value})
-            line(pmouseX, pmouseY, mouseX, mouseY)
-        }`);
-    }
-    update();
-  });
+  }
+  function drawWidgetOnChange(){
+    addToFunction("draw", `
+      if(mouseIsPressed){
+          strokeWeight(${widgetDrawSizeEl.value})
+          stroke(${widgetDrawREl.value}, ${widgetDrawGEl.value}, ${widgetDrawBEl.value})
+          line(pmouseX, pmouseY, mouseX, mouseY)
+      }`);
+  };
 
   //Bubble
-  var bubbleBtnEl = document.getElementById('bubbleBtn');
-  bubbleBtnEl.addEventListener('click', function (event) {
-    event.preventDefault();
-
-    showPopup("Balão de Texto", `
+  const bubbleHtml = `
     <label for="widgetBubbleText" class="form-label">Texto</label>
     <textarea class="form-control" id="widgetBubbleText" rows="3">Meu texto</textarea>
     <label for="widgetBubbleFont" class="form-label">Fonte</label>
@@ -539,14 +607,27 @@ function draw() {
       <option>Direita</option>
       <option>Esquerda</option>
     </select>
-    `);
+    `;
+  var bubbleBtnEl = document.getElementById('bubbleBtn');
+  bubbleBtnEl.addEventListener('click', function (event) {
+    event.preventDefault();
 
-    var widgetBubbleTextEl = document.getElementById('widgetBubbleText');
-    var widgetBubbleXEl = document.getElementById('widgetBubbleX');
-    var widgetBubbleYEl = document.getElementById('widgetBubbleY');
-    var widgetBubbleSizeEl = document.getElementById('widgetBubbleSize');
-    var widgetBubbleDirectionEl = document.getElementById('widgetBubbleDirection');
-    var widgetBubbleFontEl = document.getElementById('widgetBubbleFont');
+    showPopup("Balão de Texto", bubbleHtml);
+    function update(){
+      reset();
+      bubbleWidgetOnChange();
+    }
+    bubbleWidgetInit(update);
+    update();
+  });
+  var widgetBubbleTextEl, widgetBubbleXEl, widgetBubbleYEl, widgetBubbleSizeEl, widgetBubbleDirectionEl, widgetBubbleFontEl;
+  function bubbleWidgetInit(update){
+    widgetBubbleTextEl = document.getElementById('widgetBubbleText');
+    widgetBubbleXEl = document.getElementById('widgetBubbleX');
+    widgetBubbleYEl = document.getElementById('widgetBubbleY');
+    widgetBubbleSizeEl = document.getElementById('widgetBubbleSize');
+    widgetBubbleDirectionEl = document.getElementById('widgetBubbleDirection');
+    widgetBubbleFontEl = document.getElementById('widgetBubbleFont');
     widgetBubbleTextEl.addEventListener('change', event => update());
     widgetBubbleTextEl.addEventListener('input', event => update());     
     widgetBubbleXEl.addEventListener('change', event => update());
@@ -554,10 +635,10 @@ function draw() {
     widgetBubbleSizeEl.addEventListener('change', event => update());
     widgetBubbleDirectionEl.addEventListener('change', event => update());
     widgetBubbleFontEl.addEventListener('change', event => update());
-
-    function update(){
-      reset();
-      if(!injector.functionExists(editor.getValue(), "desenhaBalao"))
+    
+  }
+  function bubbleWidgetOnChange(){
+    if(!injector.functionExists(editor.getValue(), "desenhaBalao")) {
       addToBegin(`function desenhaBalao(texto, direcao, font, tamanho, x, y) {
         textFont(font);
         textSize(tamanho);
@@ -589,11 +670,9 @@ function draw() {
       }
 
       `);
-
-      addToFunction("draw", `desenhaBalao("${widgetBubbleTextEl.value.replace(/\n/g, '\\\\n')}", "${widgetBubbleDirectionEl.value}", "${widgetBubbleFontEl.value}", ${widgetBubbleSizeEl.value}, ${widgetBubbleXEl.value}, ${widgetBubbleYEl.value});`);
     }
-    update();
-  });
+    addToFunction("draw", `desenhaBalao("${widgetBubbleTextEl.value.replace(/\n/g, '\\\\n')}", "${widgetBubbleDirectionEl.value}", "${widgetBubbleFontEl.value}", ${widgetBubbleSizeEl.value}, ${widgetBubbleXEl.value}, ${widgetBubbleYEl.value});`);
+  }
 
   //Ajuda
   var helpBtnEl = document.getElementById('helpBtn');
