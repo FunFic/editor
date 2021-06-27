@@ -30,7 +30,23 @@ const PRECACHE_URLS = [
   '/js/injection.js',
   '/js/popper.min.js',
   '/js/bootstrap/bootstrap.min.js',
-  '/js/script.js'
+  '/js/script.js',
+  '/images/icones2/add.png',
+  '/images/icones/add.png',
+  '/images/icones2/background.png',
+  '/images/icones/background.png',
+  '/images/icones2/txt.png',
+  '/images/icones/txt.png',
+  '/images/icones2/img.png',
+  '/images/icones/img.png',
+  '/images/icones2/draw.png',
+  '/images/icones/draw.png',
+  '/images/icones2/balao.png',
+  '/images/icones/balao.png',
+  '/images/icones2/help.png',
+  '/images/icones/help.png',
+  '/images/icones2/down.png',
+  '/images/icones/down.png'
 ];
 
 // The install handler takes care of precaching the resources we always need.
