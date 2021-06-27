@@ -22,13 +22,15 @@ function draw() {
       if(menuEl.style.height){
         //dont let rezise when mobile appears
         var actualHeight = parseInt(menuEl.style.height);
-        if(halfHeight < actualHeight)
+        if(halfHeight < actualHeight){
           return;
+        }
       }
+      halfHeight += "px";
     }
-    menuEl.style.height = halfHeight + "px";
-    editorEl.style.height = halfHeight + "px";
-    resultEl.style.height = halfHeight + "px";
+    menuEl.style.height = halfHeight;
+    editorEl.style.height = halfHeight;
+    resultEl.style.height = halfHeight;
   }
   window.addEventListener('resize', resize);
   resize();
