@@ -14,6 +14,24 @@ function draw() {
   var menuEl = document.getElementById("menu");
   var editorEl = document.getElementById("editor");
   var resultEl = document.getElementById("result");
+  function resize(){
+    //Set absolute height to avoid resizing when keyboard appears
+    var halfHeight = "";
+    if(window.innerWidth < 767){
+      halfHeight = (window.innerHeight / 2) + "px";
+      if(menuEl.style.height){
+        //dont let rezise when mobile appears
+        var actualHeight = parseInt(menuEl.style.height);
+        if(halfHeight < actualHeight)
+          return;
+      }
+    }
+    menuEl.style.height = halfHeight;
+    editorEl.style.height = halfHeight;
+    resultEl.style.height = halfHeight;
+  }
+  window.addEventListener('resize', resize);
+  resize();
 
   /*
   Editor
@@ -1046,17 +1064,6 @@ const iframeHtml = `<!DOCTYPE html>
     editor.setValue(
       js_beautify(code)
     );
-  }
-
-  /*
-  Mobile
-  */
-  //Set absolute height to avoid resizing when keyboard appears
-  if(window.innerWidth < 767){
-    var halfHeight = (window.innerHeight / 2) + "px";
-    menuEl.style.height = halfHeight;
-    editorEl.style.height = halfHeight;
-    resultEl.style.height = halfHeight;
   }
   
   /*
