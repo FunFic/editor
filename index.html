@@ -65,7 +65,7 @@
   </div>
 </div>
 
-<button type="button" class="btn btn-light" id="errorsBtn">Erros <span id="errorsTotal" class="badge bg-danger">9</span></button>
+<button type="button" class="btn btn-light" id="errorsBtn">Erros <span id="errorsTotal" class="badge bg-danger"></span></button>
 
 <div id="errorList">
   <div id="errorDescription" class="toast hide" role="alert" aria-live="assertive" aria-atomic="true">
@@ -213,18 +213,22 @@ function draw() {
   });
 
   function reset(){
-    editor.setValue(prevValue);
+    if(prevValue != editor.getValue()){
+      editor.setValue(prevValue);
+    }
     editor.navigateTo(prevCursor.row, prevCursor.column);
+    editor.focus();
   }
-
-  /*
-  Widgets
-  */
+  
   function showPopup(title, body){
     popupTitleEl.innerHTML = title;
     popupBodyEl.innerHTML = body;
     popup.show();
   }
+
+  /*
+  Widgets
+  */
 
   //New
   var newBtnEl = document.getElementById('newBtn');
