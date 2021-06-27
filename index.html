@@ -691,7 +691,7 @@ function draw() {
           <div class="accordion-body">
             FunFic é um espaço inventivo, onde você poderá explorar novas formas de construção, exibição e transmissão de conteúdo literário fazendo uso de novas tecnologias digitais. A ideia é proporcionar o encontro entre o universo fanfic e programação criativa em um ambiente laboratorial para desenvolvimento de novas experiências com a produção literária e escrita de códigos. 
             <br/><br/>
-            Esperamos que quanto mais você exercitar suas ideias utilizando a FunFic, mais irá aprender sobre programação através da busca por customização da ferramenta. E quanto aos meios de aprendizado? Deixa com a gente! Além de encontrar uma interface que facilita esse aprendizado de maneira prática, vai ter acesso também a uma série de tutoriais e documentação para transbordar as possibilidades disponíveis na ferramenta.
+            Esperamos que quanto mais você exercitar suas ideias utilizando a FunFic, mais irá aprender sobre programação através da busca por customização da ferramenta.
           </div>
         </div>
       </div>
@@ -703,7 +703,15 @@ function draw() {
         </h2>
         <div id="collapse2" class="accordion-collapse collapse" aria-labelledby="heading2" data-bs-parent="#accordionExample">
           <div class="accordion-body">
-            Programação criativa é um tipo de programação de computadores em que o objetivo é criar algo expressivo em vez de algo funcional.(John Maeda - Creative Code) Toda programação é criativa, mas nem todo mundo programa de uma forma experimental, ou seja, sem saber exatamente onde o processo criativo vai levar. E isso muda tudo!
+            <figure class="text-center">
+              <blockquote class="blockquote">
+                <p>Programação criativa é um tipo de programação de computadores em que o objetivo é criar algo expressivo em vez de algo funcional.</p>
+              </blockquote>
+              <figcaption class="blockquote-footer">
+                John Maeda in <cite title="Source Title">Creative Code</cite>
+              </figcaption>
+            </figure>
+            Toda programação é criativa, mas nem todo mundo programa de uma forma experimental, ou seja, sem saber exatamente onde o processo criativo vai levar. E isso muda tudo!
           </div>
         </div>
       </div>
@@ -715,7 +723,8 @@ function draw() {
         </h2>
         <div id="collapse3" class="accordion-collapse collapse" aria-labelledby="heading3" data-bs-parent="#accordionExample">
           <div class="accordion-body">
-            FanFic é uma narrativa ficcional, escrita e divulgada em diversas plataformas pertencentes ao ciberespaço, dentre as mais conhecidas podemos citar: Commaful Wattpad, FanFiction. A criação de Fanfics parte da apropriação de personagens e enredos provenientes de produtos midiáticos como filmes, séries, quadrinhos, histórias videogames, etc. Portanto, tem como finalidade a construção de um universo paralelo ao original e também a ampliação do contato dos fãs com as obras que apreciam.
+            FanFic é uma narrativa ficcional, escrita e divulgada em diversas plataformas pertencentes ao ciberespaço, dentre as mais conhecidas podemos citar: <a href="https://commaful.com/" target="_blank">Commaful</a>, <a href="https://www.wattpad.com/" target="_blank">Wattpad</a> e <a href="https://fanfiction.com.br/" target="_blank">FanFiction</a>.<br/>
+            A criação de Fanfics parte da apropriação de personagens e enredos provenientes de produtos midiáticos como filmes, séries, quadrinhos, histórias videogames, etc. Portanto, tem como finalidade a construção de um universo paralelo ao original e também a ampliação do contato dos fãs com as obras que apreciam.
           </div>
         </div>
       </div>
@@ -818,7 +827,7 @@ function draw() {
                 <a href="https://groups.google.com/g/processing-brasil" target="_blank">Grupo de email sobre Processing</a>
               </li>
               <li>
-                <a href="https://t.me/programacaocriativaChat" target="_blank"> sobre Programação Criativa no Telegram</a>
+                <a href="https://t.me/programacaocriativaChat" target="_blank">Grupo sobre Programação Criativa no Telegram</a>
               </li>
               <li>
                 <a href="https://openprocessing.com" target="_blank">OpenProcessing (Rede social de Programação Criativa)</a>
@@ -837,7 +846,8 @@ function draw() {
           <div class="accordion-body">
             O comando <code>createCanvas(windowWidth, windowHeight);</code> define o tamanho da área de desenho. E as prorpriedades <code>windowWidth</code> e <code>windowHeight</code> fazem com que o programa tenha o tamanho da área disponível na janela do navegador.
             <br/>
-            Se você quer mudar o tamanho, você precisa alterar <code>windowWidth</code> pelo número em pixels da largura que você quer, e <code>windowHeight</code> substitua pela altura.
+            Se você quer mudar o tamanho, você precisa alterar <code>windowWidth</code> pelo número em pixels da largura que você quer, e <code>windowHeight</code> substitua pela altura.<br/>
+            Ex: <code>createCanvas(1280, 720);</code>
           </div>
         </div>
       </div>
@@ -869,25 +879,21 @@ function draw() {
                 Se seu código nunca funcionou, talvez seu dispositivo não seja compatível com a FunFic, que utiliza HTML e Canvas para realizar os desenhos. Para melhor experiência com a FunFic, recomendamos usar a versão mais atual do navegador Google Chrome.
               </li>
               <li>
-                Seu código parou de funcionar depois de alguma alteração feita diretamente no código?
-                <br/>
-                Recomendamos o seguinte passo-a-passo:
+                Seu código parou de funcionar depois de alguma alteração feita diretamente no código. Recomendamos o seguinte passo-a-passo:
                 <ul>
                   <li>
-                    Verifique se você digitou corretamente os comandos, comandos escritos com letras maiúsculas são diferentes de comandos escritos em letras minúsculas.
+                    Verificar se você digitou corretamente os comandos, comandos escritos com letras maiúsculas são diferentes de comandos escritos em letras minúsculas.
                   </li>
                   <li>
-                    Verifique se há uma caixa de "Erro" no canto inferior direito. Esta funcionalidade apresenta a linha e o tipo de erro. Busque olhar para a linha onde o erro acontece, pode ter sido algum erro de digitação. Se não estiver evidente a solução, procure jogar no google o tipo de erro apresentado. Você vai descobrir que muita gente passou pelos mesmo desafios que você.
+                    Verificar se há uma caixa de "Erro" no canto inferior direito. Esta funcionalidade apresenta a linha e o tipo de erro. Busque olhar para a linha onde o erro acontece, pode ter sido algum erro de digitação. Se não estiver evidente a solução, procure jogar no google o tipo de erro apresentado. Você vai descobrir que muita gente passou pelos mesmo desafios que você.
                   </li>
                   <li>
-                    Verifique se os parênteses() e chaves{} foram todos fechados na ordem correta. É muito comum esquecer estes caracteres, ou embaralhar a ordem que eles são abertos e fechados. Se não tiver certeza de como isso funciona, recomendamos fazer o curso de JavaScript que recomendamos na pergunta “Onde assisto aulas sobre programação?”.
-                  </li>
-                  <li>
-                    Esperamos que isso ajude você a resolver seu problema, se ainda problemas, pode não ser uma questão de grafia do código, mas na lógica, e aí fica mais difícil achar uma solução pronta.  Experimente procurar por pessoas com problemas semelhanes ou pedir ajuda no <a href="https://pt.stackoverflow.com/" target="_blank">StackOverflow</a>.
+                    Verificar se os parênteses() e chaves{} foram todos fechados na ordem correta. É muito comum esquecer estes caracteres, ou embaralhar a ordem que eles são abertos e fechados. Se não tiver certeza de como isso funciona, recomendamos fazer o curso de JavaScript que recomendamos na pergunta “Onde assisto aulas sobre programação?”.
                   </li>
                 </ul>
               </li>
             </ol>
+            Esperamos que isso ajude você a resolver seu problema, se ainda tiver problemas, pode não ser uma questão de grafia do código, mas na lógica, e aí fica mais difícil achar uma solução pronta.  Experimente procurar por pessoas com problemas semelhanes no Google ou pedir ajuda no <a href="https://pt.stackoverflow.com/" target="_blank">StackOverflow</a>.
           </div>
         </div>
       </div>
