@@ -80,7 +80,7 @@ function draw() {
     hideErrorList();
   });
 
-  onError = function(msg, line){
+  window.onError = function(msg, line){
     errorCount++;
     errorsTotalEl.innerText = errorCount;
     errorsBtnEl.style.display = "";
@@ -98,8 +98,7 @@ var resultEl = document.getElementById("result");
 
 //message receiver
 //store temporary function
-var onImageLoaded;
-var onError;
+window.onImageLoaded;
 
 function showResult(){
   resetErrors();
@@ -109,8 +108,10 @@ function showResult(){
   iframeEl.title = "Resultado";
   resultEl.appendChild(iframeEl);
   iframeEl.contentWindow.document.open();
-  iframeEl.contentWindow.document.write(getIframeHtml());
+  iframeEl.contentWindow.document.write(iframeHtml);
   iframeEl.contentWindow.document.close();
+  iframeEl.contentWindow.postMessage({type:"sketchCode", code:editor.getValue()});
+  iframeEl.contentWindow.postMessage({type:"p5jsCode", code:p5jsSourceCode});
 }
 
 editor.session.on('change', function(delta) {
@@ -132,9 +133,7 @@ xmlhttp.onreadystatechange=function()
 xmlhttp.open("GET", "js/p5/p5.min.js", true);
 xmlhttp.send();
 
-function getIframeHtml(){
-  var code = editor.getValue();
-  return `<!DOCTYPE html>
+const iframeHtml = `<!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="utf-8">
@@ -148,21 +147,29 @@ function getIframeHtml(){
     height: 100%;
     overflow: hidden;
   }
-</style>
-<script type="text/javascript" charset="utf-8">${p5jsSourceCode}<\/script>
-<script type="text/javascript" charset="utf-8">${code}<\/script>
+<\/style>
 <script type="text/javascript" charset="utf-8">
   window.addEventListener("message", (event) => {
-      if(typeof event.data == "object" && event.data.type) {
-        if(event.data.type == "getImage")
-            getImage();
-      }
+    if(event.data.type == "sketchCode"){
+      var script = document.createElement('script');
+      script.type = 'text/javascript';
+      script.innerHTML = event.data.code;
+      document.head.appendChild(script);
+    } else if(event.data.type == "p5jsCode") {
+      var script = document.createElement('script');
+      script.type = 'text/javascript';
+      script.innerHTML = event.data.code;
+      document.head.appendChild(script);
+    } else if(typeof event.data == "object" && event.data.type) {
+      if(event.data.type == "getImage")
+        getImage();
+    }
   }, false);
 
   function getImage(){
-      var canvas = document.querySelector("canvas");
-      var data = canvas.toDataURL("image/jpeg");
-      parent.onImageLoaded(data);
+    var canvas = document.querySelector("canvas");
+    var data = canvas.toDataURL("image/jpeg");
+    parent.onImageLoaded(data);
   }
 
   window.onerror = function (msg, url, line) {
@@ -173,7 +180,6 @@ function getIframeHtml(){
 <body>
 <\/body>
 <\/html>`;
-}
 
   /*
   Popup
@@ -985,13 +991,13 @@ function getIframeHtml(){
     });
     
     widgetSaveSaveImageEl.addEventListener('click', event => {
-      onImageLoaded = onLoadToSave;
+      window.onImageLoaded = onLoadToSave;
       resultEl.contentWindow.postMessage({type:"getImage"});
     });
 
     if (navigator.canShare) {
       widgetSaveShareEl.addEventListener('click', event => {
-        onImageLoaded = onLoadToShare;
+        window.onImageLoaded = onLoadToShare;
         resultEl.contentWindow.postMessage({type:"getImage"});
       });
     } else {
