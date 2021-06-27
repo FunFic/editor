@@ -9,7 +9,7 @@
     ],
     "theme_color": "#FBCBCF",
     "background_color": "#FFF",
-    "display": "minimal-ui",
+    "display": "standalone",
     "description": "FunFic é um espaço inventivo para desenvolvimento de novas experiências com a produção literária e escrita de códigos.",
     "start_url": "./index.html"
 }
