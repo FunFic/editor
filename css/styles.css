@@ -13,7 +13,7 @@ body {
 {
     height: 100%;
 }
-#result {
+#result iframe {
     width: 100%;
     height: 100%;
 }
