@@ -30,9 +30,6 @@
           <li><a href="#" id="bubbleBtn" data-bs-toggle="tooltip" data-bs-placement="right" title="Adicionar balão de texto">Balão</a></li>
           <li><a href="#" id="helpBtn" data-bs-toggle="tooltip" data-bs-placement="right" title="Obter ajuda">Perguntas e Macetes</a></li>
           <li><a href="#" id="saveBtn" data-bs-toggle="tooltip" data-bs-placement="right" title="Salvar">Salvar</a></li>
-          <!--<li><a href="javascript:addText();">Text</a></li>
-          <li><a href="javascript:addCircle();">Circle</a></li>
-          <li><a href="javascript:valida();">Valida</a></li>-->
         </ol>
       </nav>
     </div><!--col-->
@@ -264,7 +261,7 @@ function draw() {
           ${textHtml}`);
           
           function update(){
-            reset();
+            resetEditor();
             backgroundWidgetOnChange();
             imageWidgetOnChange();
             textWidgetOnChange();
@@ -292,7 +289,7 @@ function draw() {
           ${bubbleHtml}`);
           
           function update(){
-            reset();
+            resetEditor();
             imageWidgetOnChange();
             bubbleWidgetOnChange();
           }
@@ -318,7 +315,7 @@ function draw() {
           ${textHtml}`);
           
           function update(){
-            reset();
+            resetEditor();
             imageWidgetOnChange();
             textWidgetOnChange();
           }
