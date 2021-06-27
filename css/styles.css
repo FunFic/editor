@@ -6,6 +6,7 @@ body {
     height: 100%;
     height: 100%;
     color: #3C5F6F;
+    overscroll-behavior: contain;/*disable pull-down to reload*/
 }
 .funfic .container-fluid,
 .funfic .row,
