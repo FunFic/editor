@@ -51,7 +51,11 @@ window.pegReverser = function() {
             `if(${pegReverse(node.test)}) ${pegReverse(node.consequent)}`
             + (node.alternate ? `else ${pegReverse(node.alternate)}` : ""),
         ReturnStatement: (node) =>
-        `return ${pegReverse(node.argument)}`,
+            `return ${pegReverse(node.argument)}`,
+        ForStatement: (node) =>
+            `for(${pegReverse(node.init)}; ${pegReverse(node.test)}; ${pegReverse(node.update)}) ${pegReverse(node.body)}`,
+        UpdateExpression : (node) => 
+            node.prefix ? `${node.operator}${pegReverse(node.argument)}` : `${pegReverse(node.argument)}${node.operator}`,
         EmptyStatement: (node) => " "
     };
 
