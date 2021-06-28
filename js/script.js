@@ -1018,13 +1018,13 @@ const iframeHtml = `<!DOCTYPE html>
     
     widgetSaveSaveImageEl.addEventListener('click', event => {
       window.onImageLoaded = onLoadToSave;
-      resultEl.contentWindow.postMessage({type:"getImage"});
+      iframeEl.contentWindow.postMessage({type:"getImage"});
     });
 
     if (navigator.canShare) {
       widgetSaveShareEl.addEventListener('click', event => {
         window.onImageLoaded = onLoadToShare;
-        resultEl.contentWindow.postMessage({type:"getImage"});
+        iframeEl.contentWindow.postMessage({type:"getImage"});
       });
     } else {
       widgetSaveShareEl.style.display = "none";
