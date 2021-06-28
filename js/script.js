@@ -1061,17 +1061,24 @@ const iframeHtml = `<!DOCTYPE html>
     );
   }
 
-  function validate(){
-    var code = injector.validate(editor.getValue());
-    editor.setValue(
-      js_beautify(code)
-    );
+  var localhost = location.hostname === "localhost" || location.hostname === "127.0.0.1";
+  if(localhost){
+    var list = document.querySelector("#menu ol");
+    var li = document.createElement("li");
+    li.innerHTML = `<a href="#" style="color: black">Validar</a>`;
+    list.appendChild(li);
+    li.addEventListener("click", (event) => {
+      var code = injector.validate(editor.getValue());
+      editor.setValue(
+        js_beautify(code)
+      );
+    });
   }
   
   /*
   Service Worker
   */
-  if (location.hostname !== "localhost" && location.hostname !== "127.0.0.1"){
+  if (!localhost){
     if ('serviceWorker' in navigator) {
       navigator.serviceWorker.register('service-worker.js')
       .then(function(registration) {
