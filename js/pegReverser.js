@@ -56,6 +56,8 @@ window.pegReverser = function() {
             `for(${pegReverse(node.init)}; ${pegReverse(node.test)}; ${pegReverse(node.update)}) ${pegReverse(node.body)}`,
         UpdateExpression : (node) => 
             node.prefix ? `${node.operator}${pegReverse(node.argument)}` : `${pegReverse(node.argument)}${node.operator}`,
+        ArrayExpression : (node) =>
+            `[${node.elements.map((inner) => pegReverse(inner)).join(", ")}]`,
         EmptyStatement: (node) => " "
     };
 
