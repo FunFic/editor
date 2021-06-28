@@ -14,14 +14,14 @@ window.pegReverser = function() {
         BinaryExpression: (node) =>
             `${pegReverse(node.left)} ${node.operator} ${pegReverse(node.right)}`,
         BlockStatement: (node) =>
-            `{${node.body.map((expr) => `\n${pegReverse(expr)};`).join("")}\n}`,
+            `{${node.body.map((expr) => `\n${pegReverse(expr)}`).join("")}\n}`,
         CallExpression: (node) =>
             `${pegReverse(node.callee)}(${node.arguments
             .map((arg) => pegReverse(arg))
             .join(", ")})`,
         DecimalLiteral: (node) => node.value,
         DoubleQuotedStringLiteral: (node) => `"${node.value}"`,
-        ExpressionStatement: (node) => `${pegReverse(node.expression)}`,
+        ExpressionStatement: (node) => `${pegReverse(node.expression)};`,
         FunctionDeclaration: (node) =>
             `function ${pegReverse(node.id)}(${node.params
             .map((inner) => pegReverse(inner))
@@ -46,14 +46,14 @@ window.pegReverser = function() {
         VariableDeclarator: (node) =>
             node.init == null
             ? `${pegReverse(node.id)};`
-            : `${pegReverse(node.id)} = ${pegReverse(node.init)}`,
+            : `${pegReverse(node.id)} = ${pegReverse(node.init)};`,
         IfStatement: (node) =>
             `if(${pegReverse(node.test)}) ${pegReverse(node.consequent)}`
             + (node.alternate ? `else ${pegReverse(node.alternate)}` : ""),
         ReturnStatement: (node) =>
             `return ${pegReverse(node.argument)}`,
         ForStatement: (node) =>
-            `for(${pegReverse(node.init)}; ${pegReverse(node.test)}; ${pegReverse(node.update)}) ${pegReverse(node.body)}`,
+            `for(${pegReverse(node.init)} ${pegReverse(node.test)}; ${pegReverse(node.update)}) ${pegReverse(node.body)}`,
         UpdateExpression : (node) => 
             node.prefix ? `${node.operator}${pegReverse(node.argument)}` : `${pegReverse(node.argument)}${node.operator}`,
         ArrayExpression : (node) =>
@@ -62,6 +62,7 @@ window.pegReverser = function() {
     };
 
     function pegReverse(node) {
+        console.log(node);
         if (node.type in pegReverseDict) {
             return pegReverseDict[node.type](node);
         } else return `[${node.type}]`;
