@@ -62,7 +62,6 @@ window.pegReverser = function() {
     };
 
     function pegReverse(node) {
-        console.log(node);
         if (node.type in pegReverseDict) {
             return pegReverseDict[node.type](node);
         } else return `[${node.type}]`;
