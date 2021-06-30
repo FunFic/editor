@@ -48,10 +48,10 @@ function draw() {
 
   function resetEditor(){
     editor.setValue(initialCode);
-    editor.navigateTo(6, 4);
-    editor.focus();
   }
   resetEditor();
+  editor.navigateTo(6, 4);
+  editor.focus();
 
   /*
   Tooltips
@@ -219,7 +219,13 @@ const iframeHtml = `<!DOCTYPE html>
     prevValue = editor.getValue();
     prevCursor = editor.selection.getCursor();
   });
-  popupEl.addEventListener('hide.bs.modal', reset);
+  popupEl.addEventListener('hide.bs.modal', function (event){
+    if(prevValue != editor.getValue()){
+      editor.setValue(prevValue);
+    }
+    editor.navigateTo(prevCursor.row, prevCursor.column);
+    editor.focus();
+  });
   popupConfirmEl.addEventListener('click', function (event) {
     prevValue = editor.getValue();
     prevCursor = editor.selection.getCursor();
@@ -230,8 +236,6 @@ const iframeHtml = `<!DOCTYPE html>
     if(prevValue != editor.getValue()){
       editor.setValue(prevValue);
     }
-    editor.navigateTo(prevCursor.row, prevCursor.column);
-    editor.focus();
   }
   
   function showPopup(title, body){
