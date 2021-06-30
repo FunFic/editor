@@ -665,6 +665,7 @@ const iframeHtml = `<!DOCTYPE html>
     widgetDrawREl = document.getElementById('widgetDrawR');
     widgetDrawGEl = document.getElementById('widgetDrawG');
     widgetDrawBEl = document.getElementById('widgetDrawB');
+    widgetDrawSizeEl.addEventListener('change', event => update());
     widgetDrawREl.addEventListener('change', event => update());
     widgetDrawGEl.addEventListener('change', event => update());
     widgetDrawBEl.addEventListener('change', event => update());
