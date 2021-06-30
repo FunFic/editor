@@ -733,11 +733,10 @@ const iframeHtml = `<!DOCTYPE html>
     widgetBubbleSizeEl.addEventListener('change', event => update());
     widgetBubbleDirectionEl.addEventListener('change', event => update());
     widgetBubbleFontEl.addEventListener('change', event => update());
-    
   }
   function bubbleWidgetOnChange(){
     if(!injector.functionExists(editor.getValue(), "desenhaBalao")) {
-      addToBegin(`function desenhaBalao(texto, direcao, font, tamanho, x, y) {
+      addToEnd(`function desenhaBalao(texto, direcao, font, tamanho, x, y) {
         textFont(font);
         textSize(tamanho);
         textLeading(tamanho);
@@ -1126,6 +1125,10 @@ const iframeHtml = `<!DOCTYPE html>
 
   function addToBegin(code){
     editor.session.insert({row: 0, column: 0}, code);
+  }
+
+  function addToEnd(code){
+    editor.session.insert({row: editor.session.getLength(), column: 0}, "\n" + code);
   }
 
   function addToFunction(functionName, code){
