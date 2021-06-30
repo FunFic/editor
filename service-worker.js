@@ -2,6 +2,7 @@ var version;// Change number to update the cache
 version = "v1.0.0";//beta
 version = "v1.0.1";//fix typing and focus conflict
 version = "v1.0.2";//add input to sliders
+version = "v1.0.3";//draggable modal + add buble to end of code
 const PRECACHE = 'precache-'+version;
 const RUNTIME = 'runtime';
 
