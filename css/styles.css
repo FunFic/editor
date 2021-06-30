@@ -22,7 +22,7 @@ body {
 
 
 /*
-Bootstrapi
+Bootstrap
 */
 .btn,
 .btn.active,
@@ -276,6 +276,13 @@ ICONS
 /*Modal*/
 .modal-backdrop.show{
     opacity: 0;
+}
+.current-value{
+    width: auto;
+    display: inline-block;
+    margin-left: 10px;
+    min-height: auto;
+    padding: 0px;
 }
 
 /*Errors*/

@@ -246,6 +246,36 @@ const iframeHtml = `<!DOCTYPE html>
     popupTitleEl.innerHTML = title;
     popupBodyEl.innerHTML = body;
     popup.show();
+    addInputToSliders();
+  }
+
+  function addInputToSliders(){
+    var sliders = popupBodyEl.querySelectorAll("input[type='range']");
+    for (let i = 0; i < sliders.length; i++) {
+      let slider = sliders[i];
+      let label = popupBodyEl.querySelector(`label[for=${slider.id}]`);
+      if(label){
+        let input = document.createElement("input");
+        input.type = "number";
+        input.min = slider.min;
+        input.max = slider.max;
+        input.classList = "form-control form-control-sm current-value";
+        label.after(input);
+        function updateInput(event) {
+          input.value = this.value;
+        }
+        function updateSlider(event) {
+          slider.value = this.value;
+          var event = new Event('change');
+          slider.dispatchEvent(event);
+        }
+        slider.addEventListener('change', updateInput);
+        slider.addEventListener('input', updateInput);
+        input.addEventListener('change', updateSlider);
+        input.addEventListener('input', updateSlider);
+        input.value = slider.value;
+      }
+    }
   }
 //#endregion
 
