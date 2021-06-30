@@ -261,6 +261,11 @@ ICONS
     border-right-color: #FBCBCF;
 }
 
+/*Popup*/
+#popup .modal-header {
+    cursor: grab;
+}
+
 
 
 /*Template*/

@@ -277,6 +277,48 @@ const iframeHtml = `<!DOCTYPE html>
       }
     }
   }
+
+  /*
+  Drag modal
+  */
+  var dragger, draggable, dragPrevX, dragPrevY;
+
+  function dragStart(event){
+    var x = event.pageX || event.offsetX;
+    var y = event.pageY || event.offsetY;
+    document.addEventListener('mousemove', dragMove);
+    document.addEventListener('mouseup', dragEnd);
+    dragPrevX = x;
+    dragPrevY = y;
+  }
+
+  function dragMove(event){
+    var x = event.pageX || event.offsetX;
+    var y = event.pageY || event.offsetY;
+    var diffX = x - dragPrevX;
+    var diffY = y - dragPrevY;
+    dragPrevX = x;
+    dragPrevY = y;
+    if(!draggable.style.top){
+      draggable.style.top = diffY + "px";
+      draggable.style.left = diffX + "px";
+    }else{
+      draggable.style.top = (diffY + parseInt(draggable.style.top)) + "px";
+      draggable.style.left = (diffX + parseInt(draggable.style.left)) + "px";
+    }
+  }
+
+  function dragEnd(event){
+    document.removeEventListener('mousemove', dragMove);
+    document.removeEventListener('mouseup', dragEnd);
+  }
+
+  function initModalDrag(){
+    dragger = popupEl.querySelector(".modal-header");
+    dragger.addEventListener("mousedown", dragStart);
+    draggable = popupEl.querySelector(".modal-content");    
+  }
+  initModalDrag();
 //#endregion
 
 
