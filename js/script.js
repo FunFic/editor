@@ -444,7 +444,7 @@ const iframeHtml = `<!DOCTYPE html>
   });
 //#endregion
 
-//#region Background
+//#region Fundo
   const backgroundHtml = `
     <label for="widgetBackgroundR" class="form-label">Vermelho</label>
     <input type="range" class="form-range" min="0" max="255" id="widgetBackgroundR">
@@ -679,7 +679,7 @@ const iframeHtml = `<!DOCTYPE html>
   };
 //#endregion
 
-//#region Bubble
+//#region Balão
   const bubbleHtml = `
     <label for="widgetBubbleText" class="form-label">Texto</label>
     <textarea class="form-control" id="widgetBubbleText" rows="3">Meu texto</textarea>
