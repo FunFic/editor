@@ -1,0 +1,50 @@
+----
+let no for
+----
+
+function setup() {
+    createCanvas(windowWidth, windowHeight);
+    background(0);
+}
+
+function draw() {
+  for (let i = 0; i < 10; i++) {
+      
+  }
+}
+
+
+----
+class
+----
+
+function setup() {
+    createCanvas(windowWidth, windowHeight);
+    background(0);
+}
+
+function draw() {
+}
+
+class Tiago{
+    constructor(x, y) {
+    }
+}
+
+
+----
+comentários
+----
+
+/*
+ * Olá
+ */
+
+ //Olá
+
+
+----
+quebra de linha
+----
+
+Linhas vazias desaparecem

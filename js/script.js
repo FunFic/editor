@@ -1,5 +1,10 @@
+//=============================================================================
+// FunFic
+//=============================================================================
+ 
 window.addEventListener('load', (event) => {
-    const initialCode = `function setup() {
+//#region START CODE
+const initialCode = `function setup() {
     createCanvas(windowWidth, windowHeight);
     background(0);
 }
@@ -7,10 +12,9 @@ window.addEventListener('load', (event) => {
 function draw() {
     
 }`;
+//#endregion
 
-  /*
-  Layout
-  */
+//#region Layout
   var menuEl = document.getElementById("menu");
   var editorEl = document.getElementById("editor");
   var resultEl = document.getElementById("result");
@@ -34,10 +38,10 @@ function draw() {
   }
   window.addEventListener('resize', resize);
   resize();
+//#endregion
 
-  /*
-  Editor
-  */
+
+//#region Editor
   var editor = ace.edit("editor");
   var prevValue, prevCursor;
 
@@ -52,18 +56,18 @@ function draw() {
   resetEditor();
   editor.navigateTo(6, 4);
   editor.focus();
+//#endregion
 
-  /*
-  Tooltips
-  */
+
+//#region Tooltips
   var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
   var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
     return new bootstrap.Tooltip(tooltipTriggerEl)
   })
+//#endregion
 
-  /*
-  Error
-  */
+
+//#region Error
   var errorsBtnEl = document.getElementById('errorsBtn');
   var errorDescriptionEl = document.getElementById('errorDescription');
   var errorContentEl = document.getElementById('errorContent');
@@ -116,10 +120,10 @@ function draw() {
       showErrorList();
     }
   }
+//#endregion
 
-/*
-Result 
-*/
+
+//#region Result
 var iframeEl;
 
 //message receiver
@@ -206,10 +210,10 @@ const iframeHtml = `<!DOCTYPE html>
 <body>
 <\/body>
 <\/html>`;
+//#endregion
 
-  /*
-  Popup
-  */
+
+//#region Popup
   var popupEl = document.getElementById('popup');
   var popup = new bootstrap.Modal(popupEl);
   var popupTitleEl = document.getElementById('popupTitle');
@@ -243,12 +247,13 @@ const iframeHtml = `<!DOCTYPE html>
     popupBodyEl.innerHTML = body;
     popup.show();
   }
+//#endregion
 
-  /*
-  Widgets
-  */
 
-  //New
+//#region Widgets
+
+
+//#region New
   var newBtnEl = document.getElementById('newBtn');
   newBtnEl.addEventListener('click', function (event) {
     event.preventDefault();
@@ -366,7 +371,7 @@ const iframeHtml = `<!DOCTYPE html>
       }, 500);
     });
   });
-
+//#endregion
 
   //Background
   const backgroundHtml = `
@@ -470,11 +475,11 @@ const iframeHtml = `<!DOCTYPE html>
     widgetTextBEl.addEventListener('change', event => update());
   }
   function textWidgetOnChange(){
-      addToFunction("draw", `
-      textFont("${widgetTextFontEl.value}");
-      textSize(${widgetTextSizeEl.value});
-      fill(${widgetTextREl.value}, ${widgetTextGEl.value}, ${widgetTextBEl.value});
-      text("${widgetTextTextEl.value.replace(/\n/g, '\\\\n')}", ${widgetTextXEl.value}, ${widgetTextYEl.value});`);
+    addToFunction("draw", `
+    textFont("${widgetTextFontEl.value}");
+    textSize(${widgetTextSizeEl.value});
+    fill(${widgetTextREl.value}, ${widgetTextGEl.value}, ${widgetTextBEl.value});
+    text("${widgetTextTextEl.value.replace(/\n/g, '\\\\n')}", ${widgetTextXEl.value}, ${widgetTextYEl.value});`);
   }
 
   //Image
@@ -1035,10 +1040,10 @@ const iframeHtml = `<!DOCTYPE html>
       console.error(`Your system doesn't support sharing files.`);
     }
   });
+//#endregion
 
-  /*
-  Injector
-  */
+
+//#region Injector
   var injector = Injection();
 
   function addToBegin(code){
@@ -1078,10 +1083,10 @@ const iframeHtml = `<!DOCTYPE html>
       );
     });
   }
-  
-  /*
-  Service Worker
-  */
+//#endregion
+
+
+//#region Service Worker
   if (!localhost){
     if ('serviceWorker' in navigator) {
       navigator.serviceWorker.register('service-worker.js')
@@ -1094,4 +1099,5 @@ const iframeHtml = `<!DOCTYPE html>
       });
     }
   }
+//#endregion
 });//DOMContentLoaded
