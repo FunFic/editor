@@ -324,7 +324,6 @@ const iframeHtml = `<!DOCTYPE html>
 
 //#region Widgets
 
-
 //#region New
   var newBtnEl = document.getElementById('newBtn');
   newBtnEl.addEventListener('click', function (event) {
@@ -445,7 +444,7 @@ const iframeHtml = `<!DOCTYPE html>
   });
 //#endregion
 
-  //Background
+//#region Background
   const backgroundHtml = `
     <label for="widgetBackgroundR" class="form-label">Vermelho</label>
     <input type="range" class="form-range" min="0" max="255" id="widgetBackgroundR">
@@ -488,8 +487,9 @@ const iframeHtml = `<!DOCTYPE html>
       addToFunction("draw", `background(${r}, ${g}, ${b})`);
     }
   }
+//#endregion
 
-  //Texto
+//#region Texto
   const textHtml = `
     <label for="widgetTextText" class="form-label">Texto</label>
     <textarea class="form-control" id="widgetTextText" rows="3">Meu texto</textarea>
@@ -553,8 +553,9 @@ const iframeHtml = `<!DOCTYPE html>
     fill(${widgetTextREl.value}, ${widgetTextGEl.value}, ${widgetTextBEl.value});
     text("${widgetTextTextEl.value.replace(/\n/g, '\\\\n')}", ${widgetTextXEl.value}, ${widgetTextYEl.value});`);
   }
+//#endregion
 
-  //Image
+//#region Image
   const imageHtml = `
     <div class="form-group">
       <label for="widgetImageFile">Imagem</label>
@@ -634,8 +635,9 @@ const iframeHtml = `<!DOCTYPE html>
       pop();
     `);
   }
+//#endregion
 
-  //Desenho
+//#region Desenho
   const drawHtml = `
     <label for="widgetDrawSize" class="form-label">Tamanho</label>
     <input type="range" class="form-range" min="10" max="100" id="widgetDrawSize">
@@ -675,8 +677,9 @@ const iframeHtml = `<!DOCTYPE html>
           line(pmouseX, pmouseY, mouseX, mouseY)
       }`);
   };
+//#endregion
 
-  //Bubble
+//#region Bubble
   const bubbleHtml = `
     <label for="widgetBubbleText" class="form-label">Texto</label>
     <textarea class="form-control" id="widgetBubbleText" rows="3">Meu texto</textarea>
@@ -768,8 +771,9 @@ const iframeHtml = `<!DOCTYPE html>
     }
     addToFunction("draw", `desenhaBalao("${widgetBubbleTextEl.value.replace(/\n/g, '\\\\n')}", "${widgetBubbleDirectionEl.value}", "${widgetBubbleFontEl.value}", ${widgetBubbleSizeEl.value}, ${widgetBubbleXEl.value}, ${widgetBubbleYEl.value});`);
   }
+//#endregion
 
-  //Ajuda
+//#region Ajuda
   var helpBtnEl = document.getElementById('helpBtn');
   helpBtnEl.addEventListener('click', function (event) {
     event.preventDefault();
@@ -1027,8 +1031,9 @@ const iframeHtml = `<!DOCTYPE html>
     </div>
     `);
   }
+//#endregion
 
-  //Salvar
+//#region Salvar
   var saveBtnEl = document.getElementById('saveBtn');
   saveBtnEl.addEventListener('click', function (event) {
     event.preventDefault();
@@ -1112,6 +1117,7 @@ const iframeHtml = `<!DOCTYPE html>
       console.error(`Your system doesn't support sharing files.`);
     }
   });
+//#endregion
 //#endregion
 
 
