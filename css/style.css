@@ -1,0 +1,85 @@
+/*Home*/
+
+html, body {
+    padding: 0;
+    margin: 0;
+    background-color: #FFF;
+    height: 100%;
+    font-family: 'Didact Gothic', sans-serif;
+}
+
+#defaultCanvas0 {
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    z-index: 1;
+    width: 100% !important;
+    min-height: 100%;
+}
+
+#overlays{
+    background-image: url("../images/home/top-left.png"), url("../images/home/top-right.png"), url("../images/home/center-right.png"), url("../images/home/bottom-right.png"), url("../images/home/bottom-left.png");
+    background-position: left top, right top, right center, right bottom, left bottom;
+    background-repeat: no-repeat, no-repeat, no-repeat, no-repeat, no-repeat;
+    background-size: 375px 360px, 381px 163px, 113px 129px, 119px 324px, 134px 407px;
+    z-index: 2;
+    width: 100%;
+    height: 100%;
+    position: fixed;
+    top: 0px;
+    left: 0px;
+    pointer-events: none;
+}
+
+
+@media screen and (max-width: 1110px) {
+    #overlays{
+        background-size: 187px 180px, 190px 81px, 113px 129px, 119px 324px, 134px 407px;
+    }
+}
+
+
+@media screen and (max-width: 670px) {
+    #overlays{
+        background-image: url("../images/home/top-right.png"), url("../images/home/bottom-right.png"), url("../images/home/bottom-left.png");
+        background-position: right top, right bottom, left bottom;
+        background-repeat: no-repeat, no-repeat, no-repeat;
+        background-size: 190px 81px, 119px 324px, 134px 407px;
+    }
+}
+
+#opening {
+    position: absolute;
+    top: 300px;
+    z-index: 3;
+    width: 100%;
+    max-width: 768px;
+    left: 50%;
+    transform: translateX(-50%); 
+}
+
+#opening p {
+    margin: 0 60px;
+    font-size: 29px;
+    color: #3c5f6f;
+}
+
+#opening a {
+    display: block;
+    width: 100%;
+    height: 54px;
+    background-image: url("../images/home/button.png");
+    background-repeat: no-repeat;
+    background-position: center top;
+    text-align: center;
+    font-size: 28px;
+    color: #FFF;
+    text-decoration: none;
+    text-transform: uppercase;
+    margin: 30px 0 100px 0;
+    padding-top: 10px;
+}
+
+#opening a:hover {
+    text-decoration: underline;
+}
