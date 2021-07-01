@@ -1,7 +1,7 @@
 # FunFic
 
 Repositório do editor FunFic. Disponível em:
-[https://funfic.github.io/editor/index.html](https://funfic.github.io/editor/index.html)
+[https://funfic.com.br](https://funfic.com.br)
 
 Este é um projeto em HTML, CSS e JS puro, ou seja, não precisa rodar nenhum comando em Node ou algo do tipo.
 
