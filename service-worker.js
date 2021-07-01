@@ -10,7 +10,7 @@ const RUNTIME = 'runtime';
 const PRECACHE_URLS = [
   './editor.html',
   './css/bootstrap/bootstrap.min.css',
-  './css/styles.css',
+  './css/editor.css',
   './js/ace/ace.js',
   './js/beautify.min.js',
   './js/pegParser.js',
