@@ -3,12 +3,12 @@ version = "v1.0.0";//beta
 version = "v1.0.1";//fix typing and focus conflict
 version = "v1.0.2";//add input to sliders
 version = "v1.0.3";//draggable modal + add buble to end of code
+version = "v1.0.4";//homepage
 const PRECACHE = 'precache-'+version;
 const RUNTIME = 'runtime';
 
 const PRECACHE_URLS = [
-  './index.html',
-  './',
+  './editor.html',
   './css/bootstrap/bootstrap.min.css',
   './css/styles.css',
   './js/ace/ace.js',
@@ -18,7 +18,7 @@ const PRECACHE_URLS = [
   './js/injection.js',
   './js/popper.min.js',
   './js/bootstrap/bootstrap.min.js',
-  './js/script.js',
+  './js/editor.js',
   './images/icones2/add.png',
   './images/icones/add.png',
   './images/icones2/background.png',
