@@ -64,6 +64,12 @@ html, body {
     color: #3c5f6f;
 }
 
+@media screen and (max-width: 670px) {
+    #opening p {
+        font-size: 20px;
+    }
+}
+
 #opening a {
     display: block;
     width: 100%;
