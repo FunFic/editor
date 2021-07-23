@@ -35,7 +35,17 @@ const PRECACHE_URLS = [
   './images/icones2/help.png',
   './images/icones/help.png',
   './images/icones2/down.png',
-  './images/icones/down.png'
+  './images/icones/down.png',
+  './images/sponsor/apoio1.png',
+  './images/sponsor/apoio2.png',
+  './images/sponsor/apoio3.png',
+  './images/sponsor/desenvolvimento.png',
+  './images/sponsor/lei.png',
+  './images/sponsor/parceria1.png',
+  './images/sponsor/parceria2.png',
+  './images/sponsor/parceria3.png',
+  './images/sponsor/patrocinio.png',
+  './images/sponsor/realizacao.png'
 ];
 
 self.addEventListener('install', event => {
