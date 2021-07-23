@@ -4,6 +4,7 @@ version = "v1.0.1";//fix typing and focus conflict
 version = "v1.0.2";//add input to sliders
 version = "v1.0.3";//draggable modal + add buble to end of code
 version = "v1.0.4";//homepage
+version = "v1.0.5";//sponsors
 const PRECACHE = 'precache-'+version;
 const RUNTIME = 'runtime';
 
