@@ -120,7 +120,7 @@ var points = [];
 var originalPoints = [];
 
 var textBox = [];
-var textBoxEl, textBoxWidth, textBoxHeight;
+var textBoxEl, footerEl, textBoxWidth, textBoxHeight;
 
 function setup() {
   createCanvas(windowWidth, document.documentElement.scrollHeight);
@@ -229,6 +229,10 @@ function updateTextBoxSize(){
     textBoxEl = document.getElementById("opening");
   textBoxWidth = textBoxEl.offsetWidth;
   textBoxHeight = textBoxEl.offsetHeight;
+
+  if(!footerEl)
+    footerEl = document.getElementById("footer");
+  footerEl.style.top = (textBoxHeight + 300) + "px";
 }
 
 function windowResized() {
