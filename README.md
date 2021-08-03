@@ -5,7 +5,7 @@ Repositório do editor FunFic. Disponível em:
 
 Este é um projeto em HTML, CSS e JS puro, ou seja, não precisa rodar nenhum comando em Node ou algo do tipo.
 
-Para rodar, basta clonar e servir a pasta usando seu httpserver de preferência.
+Para rodar, é necessário [clonar](https://docs.github.com/pt/github/creating-cloning-and-archiving-repositories/cloning-a-repository-from-github/cloning-a-repository) e [servir a pasta usando um servidor HTTP](https://developer.mozilla.org/pt-BR/docs/Learn/Common_questions/set_up_a_local_testing_server) de preferência.
 
 
 ## O que é FunFic?
@@ -72,7 +72,7 @@ Uma das coisas mais especiais sobre FanFic e Programação Criativa é o sentido
 
 ## Como faço para mudar o tamanho da minha área de desenho?
 
-O comando `createCanvas(windowWidth, windowHeight);` define o tamanho da área de desenho. E as prorpriedades `windowWidth` e `windowHeight` fazem com que o programa tenha o tamanho da área disponível na janela do navegador.
+O comando `createCanvas(windowWidth, windowHeight);` define o tamanho da área de desenho. E as propriedades `windowWidth` e `windowHeight` fazem com que o programa tenha o tamanho da área disponível na janela do navegador.
 
 Se você quer mudar o tamanho, você precisa alterar `windowWidth` pelo número em pixels da largura que você quer, e `windowHeight` substitua pela altura.
 
@@ -80,27 +80,26 @@ Ex: `createCanvas(1280, 720);`
 
 ## Como faço para sugerir correções no FunFic?
 
-FunFic é o projeto Open Source. Caso queira contribuir com correções, criação de ferramentas e ampliação de possibilidades, acesse nosso github e fique a vontade. Ajude novos programadores a encontrar um caminho de aprendizado mais fácil e intuitivo.
+FunFic é um projeto de código aberto(Open-Source). Caso queira contribuir com correções, criação de ferramentas e ampliação de possibilidades, acesse nosso github e fique à vontade. Ajude novos programadores a encontrar um caminho de aprendizado mais fácil e intuitivo.
 
 [https://github.com/FunFic](https://github.com/FunFic)
 
 ## Meu código não funciona, o que pode ser?
 
-Um código pode não funcionar por várias razões. Vamos as principais
-delas:
+Um código pode não funcionar por várias razões. Vamos as principais delas:
 
-1.  Se seu código nunca funcionou, talvez seu dispositivo não seja compatível com a FunFic, que utiliza HTML e Canvas para realizar osdesenhos. Para melhor experiência com a FunFic, recomendamos usar aversão mais atual do navegador Google Chrome.
+1.  Se seu código nunca funcionou, talvez seu dispositivo não seja compatível com a FunFic, que utiliza HTML e Canvas para realizar os desenhos. Para melhor experiência com a FunFic, recomendamos usar a versão mais atual do navegador Google Chrome.
 2.  Seu código parou de funcionar depois de alguma alteração feita diretamente no código. Recomendamos o seguinte passo-a-passo:
     -   Verificar se você digitou corretamente os comandos, comandos escritos com letras maiúsculas são diferentes de comandos escritos em letras minúsculas.
-    -   Verificar se há uma caixa de "Erro" no canto inferior direito. Esta funcionalidade apresenta a linha e o tipo de erro. Busque olhar para a linha onde o erro acontece, pode ter sido algum erro de digitação. Se não estiver evidente a solução, procure jogar no google o tipo de erro apresentado. Você vai descobrir que muita gente passou pelos mesmo desafios que você.
+    -   Verificar se há uma caixa de "Erro" no canto inferior direito. Esta funcionalidade apresenta a linha e o tipo de erro. Busque olhar para a linha onde o erro acontece, pode ter sido algum erro de digitação. Se não estiver evidente a solução, procure jogar no google o tipo de erro apresentado. Você vai descobrir que muita gente passou pelos mesmos desafios que você.
     -   Verificar se os parênteses() e chaves{} foram todos fechados na ordem correta. É muito comum esquecer estes caracteres, ou embaralhar a ordem que eles são abertos e fechados. Se não tiver certeza de como isso funciona, recomendamos fazer o curso de JavaScript que recomendamos na pergunta “Onde assisto aulas sobre programação?”.
 
-Esperamos que isso ajude você a resolver seu problema, se ainda tiver  problemas, pode não ser uma questão de grafia do código, mas na lógica, e aí fica mais difícil achar uma solução pronta. Experimente procurar por pessoas com problemas semelhanes no Google ou pedir ajuda no [StackOverflow](https://pt.stackoverflow.com/).
+Esperamos que isso ajude você a resolver seu problema, se ainda tiver  problemas, pode não ser uma questão de grafia do código, mas na lógica, e aí fica mais difícil achar uma solução pronta. Experimente procurar por pessoas com problemas semelhantes no Google ou pedir ajuda no [StackOverflow](https://pt.stackoverflow.com/).
 
 ## Quem criou a FunFic?
 
 A FunFic foi idealizada por [André Anastácio](https://www.instagram.com/4n4st4cio/) e [Carlos Oliveira (Vamoss)](https://vamoss.com.br/) durante a residência artística [BiblioHackLab](https://www.bibliolab.com.br/bibliohacklab), projeto de inovação, criatividade e desenvolvimento em Bibliotecas coordenados por [Casa da Árvore](http://www.casadaarvore.art.br/).
 
-Contou também com a orientação de [Ricardo Palmiere](http://www.vjpalm.com/) e com a colaboração de [Tiago Rezende](https://esque.ma/).
+Contou também com a orientação de [Ricardo Palmieri](http://www.vjpalm.com/) e com a colaboração de [Tiago Rezende](https://esque.ma/).
 
 FunFic é um projeto possível graças a cultura do conhecimento aberto, e utilizou os projetos de código livre [P5js](https://p5js.org/) da [Fundação Processing](https://processingfoundation.org/), [Ace Editor](https://ace.c9.io/) e [Bootstrap](https://getbootstrap.com/).
